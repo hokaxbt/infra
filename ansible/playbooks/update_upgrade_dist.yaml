@@ -1,0 +1,20 @@
+---
+- name: APT
+  hosts: all
+  remote_user: root
+  tasks:
+    - name: APT | Update apt-cache and do dist upgrade
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+        upgrade: dist
+
+    - name: APT | Check if reboot required
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file
+
+    - name: APT | Reboot if required
+      reboot:
+        reboot_timeout: 3600
+      when: reboot_required_file.stat.exists == true
