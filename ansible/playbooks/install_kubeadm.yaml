@@ -116,6 +116,6 @@
 
     - name: Kubeadm | Start Kubelet
       service:
-        name: cri-o
-        state: kubelet
+        name: kubelet
+        state: started
         enabled: true
