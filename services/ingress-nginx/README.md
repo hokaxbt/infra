@@ -39,3 +39,9 @@ Make sure the service is healthy before continue next step:
 ```shell
 hcloud load-balancer describe kubernetes
 ```
+
+## Notes
+
+-   `ingress-nginx` is deployed as DaemonSet that runs across control plane
+    nodes and bind port `30080` to serve HTTP traffic and port `30443` to serve
+    HTTPS traffic.
