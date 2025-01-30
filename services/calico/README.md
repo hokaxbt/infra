@@ -54,3 +54,5 @@ kubectl run -i -t busybox --rm --image=busybox:latest --restart=Never -- nslooku
 
 -   [Calico Installation](https://docs.tigera.io/calico/latest/getting-started/kubernetes/self-managed-onprem/config-options)
 -   [Enable WireGuard for a cluster](https://docs.tigera.io/calico/latest/network-policy/encrypt-cluster-pod-traffic#enable-wireguard-for-a-cluster)
+-   [Configure MTU to maximize network performance](https://docs.tigera.io/calico/latest/networking/configuring/mtu)
+-   [Encrypt in-cluster pod traffic](https://docs.tigera.io/calico/latest/network-policy/encrypt-cluster-pod-traffic#enable-wireguard-for-a-cluster)
