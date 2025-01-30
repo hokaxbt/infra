@@ -1,0 +1,21 @@
+---
+- name: Wireguard
+  hosts: all
+  remote_user: root
+  tasks:
+    - name: Wireguard | Install package
+      apt:
+        pkg:
+          - wireguard
+        state: latest
+        update_cache: true
+
+    - name: Wireguard | Check if reboot required
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file
+
+    - name: Wireguard | Reboot if required
+      reboot:
+        reboot_timeout: 3600
+      when: reboot_required_file.stat.exists == true
