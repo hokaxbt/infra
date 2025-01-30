@@ -1,0 +1,4 @@
+replicas: 3
+
+apiService:
+  insecureSkipTLSVerify: true
