@@ -1,0 +1,102 @@
+# Cert Manager Test to validate the setup
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: cert-manager-test
+  labels:
+    app.kubernetes.io/name: cert-manager-test
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cert-manager-test
+  namespace: cert-manager-test
+  labels:
+    app.kubernetes.io/name: cert-manager-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cert-manager-test
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: cert-manager-test
+    spec:
+      containers:
+        - name: cert-manager-test
+          image: hashicorp/http-echo:1.0.0
+          args:
+            - -listen=:8080
+            - -text="hoka"
+          resources:
+            limits:
+              memory: 100Mi
+              cpu: "0.5"
+            requests:
+              memory: 50Mi
+              cpu: "0.1"
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cert-manager-test
+  namespace: cert-manager-test
+spec:
+  selector:
+    app.kubernetes.io/name: cert-manager-test
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cert-manager-test-tls
+  namespace: cert-manager-test
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cert-manager-test
+  namespace: cert-manager-test
+  labels:
+    app.kubernetes.io/name: cert-manager-test
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  ingressClassName: nginx
+  tls:
+    - secretName: cert-manager-test-tls
+      hosts:
+        - cert-manager-test.tickerhot.com
+
+  rules:
+    - host: cert-manager-test.tickerhot.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: cert-manager-test
+                port:
+                  number: 80

@@ -1,0 +1,84 @@
+# +docs:section=Global
+
+global:
+  # Set the verbosity of cert-manager. A range of 0 - 6, with 6 being the most verbose.
+  logLevel: 6
+
+crds:
+  enabled: true
+
+extraArgs:
+  - --logging-format=json
+
+# Override the namespace used to store DNS provider credentials etc. for ClusterIssuer
+# resources. By default, the same namespace as cert-manager is deployed within is
+# used. This namespace will not be automatically created by the Helm chart.
+clusterResourceNamespace: "cert-manager"
+
+# When this flag is enabled, secrets will be automatically removed when the certificate resource is deleted.
+enableCertificateOwnerRef: true
+
+# Resources to provide to the cert-manager controller pod.
+#
+# For example:
+#  requests:
+#    cpu: 10m
+#    memory: 32Mi
+#
+# For more information, see [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
+# resources: {}
+
+prometheus:
+  enabled: true
+
+webhook:
+  # Number of replicas of the cert-manager webhook to run.
+  #
+  # The default is 1, but in production set this to 2 or 3 to provide high
+  # availability.
+  #
+  # If `replicas > 1`, consider setting `webhook.podDisruptionBudget.enabled=true`.
+  replicaCount: 2
+
+  extraArgs:
+    - --logging-format=json
+
+  # Resources to provide to the cert-manager webhook pod.
+  #
+  # For example:
+  #  requests:
+  #    cpu: 10m
+  #    memory: 32Mi
+  #
+  # For more information, see [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
+  # resources: {}
+
+# +docs:section=CA Injector
+
+cainjector:
+  # Create the CA Injector deployment
+  enabled: true
+
+  # The number of replicas of the cert-manager cainjector to run.
+  #
+  # The default is 1, but in production set this to 2 or 3 to provide high
+  # availability.
+  #
+  # If `replicas > 1`, consider setting `cainjector.podDisruptionBudget.enabled=true`.
+  #
+  # Note that cert-manager uses leader election to ensure that there can
+  # only be a single instance active at a time.
+  replicaCount: 2
+
+  extraArgs:
+    - --logging-format=json
+
+  # Resources to provide to the cert-manager cainjector pod.
+  #
+  # For example:
+  #  requests:
+  #    cpu: 10m
+  #    memory: 32Mi
+  #
+  # For more information, see [Resource Management for Pods and Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/).
+  # resources: {}
