@@ -39,7 +39,6 @@
       service:
         name: systemd-networkd
         state: restarted
-      when: sytemd_networkd_file["changed"] == true
 
     - name: Cloudflare DNS | Restart systemd-resolved
       service:
