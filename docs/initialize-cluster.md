@@ -38,6 +38,10 @@ clusterName: "hokaxbt"
 apiVersion: kubeproxy.config.k8s.io/v1alpha1
 kind: KubeProxyConfiguration
 mode: iptables
+---
+apiVersion: kubelet.config.k8s.io/v1beta1
+kind: KubeletConfiguration
+serverTLSBootstrap: true
 EOF
 ```
 
@@ -260,9 +264,8 @@ Install:
 helm install metrics-server metrics-server/metrics-server \
   --namespace metrics-server \
   --create-namespace \
-  --set replicas=3 \
-  --set apiService.insecureSkipTLSVerify=false \
-  --set tls.type="cert-manager"
+  --set replicas=1 \
+  --set apiService.insecureSkipTLSVerify=true
 ```
 
 ## Resources

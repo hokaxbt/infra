@@ -1,0 +1,17 @@
+# Docs: https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/#kubelet-serving-certs
+---
+- name: Enabling signed kubelet serving certificates
+  hosts: all
+  remote_user: root
+  tasks:
+    - name: Add serverTLSBootstrap
+      lineinfile:
+        path: /var/lib/kubelet/config.yaml
+        line: "serverTLSBootstrap: true"
+        backup: true
+      notify: Restart kubelet
+  handlers:
+    - name: Restart kubelet
+      service:
+        name: kubelet
+        state: restarted
