@@ -1,0 +1,12 @@
+---
+- name: Debug Host Vars
+  hosts: all
+  remote_user: root
+  gather_facts: true
+  tasks:
+    - name: Debug facts
+      debug:
+        var: ansible_facts
+    - name: Debug host vars
+      debug:
+        var: topology
