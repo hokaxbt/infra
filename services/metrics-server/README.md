@@ -61,3 +61,21 @@ apiVersion: kubelet.config.k8s.io/v1beta1
 kind: KubeletConfiguration
 serverTLSBootstrap: true
 ```
+
+Make sure to approve ceritificate issuance of new node:
+
+```shell
+kubectl get csr  --sort-by=.metadata.creationTimestamp
+```
+
+Approve:
+
+```shell
+kubectl certificate approve <csr-name>
+```
+
+Or approve all:
+
+```shell
+kubectl get csr  --no-headers | awk '{print $1}' | xargs kubectl certificate approve
+```
