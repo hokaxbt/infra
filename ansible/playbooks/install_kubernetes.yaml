@@ -1,34 +1,34 @@
 ---
-- name: Kubeadm
+- name: Install Kubernetes
   hosts: all
   remote_user: root
   gather_facts: true
   tasks:
-    - name: Kubeadm | Add the overlay module
+    - name: Install Kubernetes | Add the overlay module
       modprobe:
         name: overlay
         state: present
         persistent: present
 
-    - name: Kubeadm | Add the br_netfilter module
+    - name: Install Kubernetes | Add the br_netfilter module
       modprobe:
         name: br_netfilter
         state: present
         persistent: present
 
-    - name: Kubeadm | Add the dm_snapshot module
+    - name: Install Kubernetes | Add the dm_snapshot module
       modprobe:
         name: dm_snapshot
         state: present
         persistent: present
 
-    - name: Kubeadm | Add the dm_thin_pool module
+    - name: Install Kubernetes | Add the dm_thin_pool module
       modprobe:
         name: dm_thin_pool
         state: present
         persistent: present
 
-    - name: Kubeadm | Set net.ipv4.ip_forward
+    - name: Install Kubernetes | Set net.ipv4.ip_forward
       sysctl:
         name: net.ipv4.ip_forward
         value: "1"
@@ -36,7 +36,7 @@
         state: present
         reload: true
 
-    - name: Kubeadm | Set net.bridge.bridge-nf-call-iptables
+    - name: Install Kubernetes | Set net.bridge.bridge-nf-call-iptables
       sysctl:
         name: net.bridge.bridge-nf-call-iptables
         value: "1"
@@ -44,7 +44,7 @@
         state: present
         reload: true
 
-    - name: Kubeadm | Set net.bridge.bridge-nf-call-ip6tables
+    - name: Install Kubernetes | Set net.bridge.bridge-nf-call-ip6tables
       sysctl:
         name: net.bridge.bridge-nf-call-ip6tables
         value: "1"
@@ -52,7 +52,7 @@
         state: present
         reload: true
 
-    - name: Kubeadm | Intall dependencies
+    - name: Install Kubernetes | Intall dependencies
       apt:
         pkg:
           - apt-transport-https
@@ -64,31 +64,31 @@
         state: latest
         update_cache: true
 
-    - name: Kubeadm | Add Kubernetes GPG key
+    - name: Install Kubernetes | Add Kubernetes GPG key
       get_url:
         url: https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key
         dest: /etc/apt/keyrings/kubernetes-apt-keyring.asc
 
-    - name: Kubeadm | Add CRI-O GPG key
+    - name: Install Kubernetes | Add CRI-O GPG key
       get_url:
         url: https://pkgs.k8s.io/addons:/cri-o:/stable:/v1.31/deb/Release.key
         dest: /etc/apt/keyrings/cri-o-apt-keyring.asc
 
-    - name: Kubeadm | Add Kubernetes to the repo
+    - name: Install Kubernetes | Add Kubernetes to the repo
       apt_repository:
         repo: deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.asc] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /
         filename: kubernetes
         state: present
         update_cache: yes
 
-    - name: Kubeadm | Add CRI-O to the repo
+    - name: Install Kubernetes | Add CRI-O to the repo
       apt_repository:
         repo: deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.asc] https://pkgs.k8s.io/addons:/cri-o:/stable:/v1.31/deb/ /
         filename: cri-o
         state: present
         update_cache: yes
 
-    - name: Kubeadm | Intall kubeadm
+    - name: Install Kubernetes | Intall kubeadm
       apt:
         pkg:
           - kubeadm
@@ -98,7 +98,7 @@
         state: latest
         update_cache: true
 
-    - name: Kubeadm | Hold
+    - name: Install Kubernetes | Hold
       dpkg_selections:
         name: "{{ item }}"
         selection: hold
@@ -108,13 +108,13 @@
         - kubelet
         - kubectl
 
-    - name: Kubeadm | Start CRI-O
+    - name: Install Kubernetes | Start CRI-O
       service:
         name: cri-o
         state: started
         enabled: true
 
-    - name: Kubeadm | Start Kubelet
+    - name: Install Kubernetes | Start Kubelet
       service:
         name: kubelet
         state: started

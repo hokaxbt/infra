@@ -12,9 +12,7 @@ started.
 Once `hcloud` is set up properly, create the control plane nodes as follows:
 
 ```shell
-hcloud server create --name controller-1 --type cax11 --image ubuntu-24.04 --location nbg1 --ssh-key macbook,imac --placement-group kubernetes
-hcloud server create --name controller-2 --type cax11 --image ubuntu-24.04 --location fsn1 --ssh-key macbook,imac --placement-group kubernetes
-hcloud server create --name controller-3 --type cax11 --image ubuntu-24.04 --location fsn1 --ssh-key macbook,imac --placement-group kubernetes
+hcloud server create --name <name> --type cax11 --image ubuntu-24.04 --location fsn1 --ssh-key macbook,imac --placement-group kubernetes
 ```
 
 ## Worker Nodes
@@ -39,11 +37,11 @@ Then select Ubuntu 24.04, press `fn+f10` then wait for installer to finish.
 
 Some info:
 
--   -n Set the hostname
--   -r Enable Software RAID
--   -l Sets the raid level
--   -p Sets the partition
--   -v Define root logical volume, 20GB is required to run kubernetes
+-   `-n` Set the hostname
+-   `-r` Enable Software RAID
+-   `-l` Sets the raid level
+-   `-p` Sets the partition
+-   `-v` Define root logical volume, 20GB is required to run kubernetes
 
 After installation finished, reboot the server using `reboot` command.
 
