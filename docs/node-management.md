@@ -118,7 +118,6 @@ Step by step:
    plane node.
 
     ```shell
-    kubeadm init phase upload-certs --upload-certs
     kubeadm token create --print-join-command
     ```
 
@@ -144,6 +143,14 @@ Step by step:
 
     ```shell
     kubectl certificate approve <csr-name>
+    ```
+
+9. Add worker labels:
+
+    ```shell
+    kubectl label node <name> node-role.kubernetes.io/worker=""
+    kubectl label node <name> topology.kubernetes.io/region="fsn1"
+    kubectl label node <name> topology.kubernetes.io/zone="fsn1-dc14"
     ```
 
 ## Remove Worker Node
