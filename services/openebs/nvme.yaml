@@ -9,3 +9,8 @@ parameters:
 provisioner: local.csi.openebs.io
 reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
+allowedTopologies:
+  - matchLabelExpressions:
+      - key: disktype
+        values:
+          - nvme
