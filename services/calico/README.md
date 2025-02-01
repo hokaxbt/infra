@@ -10,6 +10,10 @@ enforcement, and flexible overlay or non-overlay networking options.
 Compared to other CNI plugins, Calico offers robust network security,
 scalability for large clusters, and efficient routing mechanisms.
 
+> [!CAUTION]
+>
+> Headless service doesn't work with calico, or I can't get it working
+
 ## Installation
 
 Intall tigera operator:
@@ -49,6 +53,15 @@ kubectl run -i -t busybox --rm --image=busybox:latest --restart=Never -- nslooku
 
 -   `spec.calicoNetwork.ipPools.cidr` in Calico Installation definition should
     be the same as `networking.podSubnet` in `ClusterConfiguration` of Kubeadm
+
+## Uninstall
+
+```
+kubectl delete -f config.yaml
+kubectl delete -f https://raw.githubusercontent.com/projectcalico/calico/v3.29.1/manifests/tigera-operator.yaml
+```
+
+Then run `uninstall_calico` playbook in [ansible](../../ansible/) directory.
 
 ## References
 
