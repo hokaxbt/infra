@@ -18,11 +18,15 @@
         path: /etc/cni/net.d/calico-kubeconfig
         state: absent
 
+    - name: Uninstall Calico | Cleaning all calico
+      shell: |
+        for i in `iptables -L | grep cali | awk '{print $2}'`; do iptables -F $i && iptables -X $i; done
+
+    - name: Uninstall Calico | Remove all calico links in all nodes
+      shell: |
+        ip link list | grep cali | awk '{print $2}' | cut -c 1-15 | xargs -I {} ip link delete {}
+
     - name: Uninstall Calico | Restart kubelet
       service:
         name: kubelet
         state: restarted
-
-    - name: Uninstall Calico | Cleaning all calico
-      shell: |
-        for i in `iptables -L | grep cali | awk '{print $2}'`; do iptables -F $i && iptables -X $i; done
