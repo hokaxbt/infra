@@ -2,7 +2,7 @@
 
 Grafana Mimir is ...
 
-## Getting started
+## Installation
 
 Create dedicated namespace for all monitoring services:
 
@@ -31,13 +31,21 @@ This will allow to the Helm chart to deploy mimir across failure zones.
 Run the following command to deploy mimir:
 
 ```shell
-helm install mimir ./chart -n monitoring --values values.yaml
+helm install grafana-mimir ./chart -n monitoring --values values.yaml
 ```
 
 Run the following command to upgrade mimir:
 
 ```shell
-helm upgrade mimir ./chart -n monitoring --values values.yaml
+helm upgrade grafana-mimir ./chart -n monitoring --values values.yaml
+```
+
+## Uninstall
+
+Run the following command to uninstall the Grafana Mimir:
+
+```shell
+helm uninstall grafana-mimir -n monitoring
 ```
 
 ## References

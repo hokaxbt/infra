@@ -47,7 +47,7 @@ config:
     advertise_port: 7946
     abort_if_cluster_join_fails: true
     join_members:
-      - "dnssrv+mimir-headless.{{ .Release.Namespace }}.svc.cluster.local:7946"
+      - 'dnssrv+{{ include "name" . }}-memberlist.{{ .Release.Namespace }}.svc.cluster.local:7946'
 
   # Common configuration to be shared between multiple components
   common:

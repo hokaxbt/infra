@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mimir
+  name: {{include "name" .}}
   labels: {{include "labels" . | nindent 4}}
 spec:
   selector:
@@ -23,7 +23,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: mimir
+            name: {{include "name" .}}
             items:
               - key: mimir.yaml
                 path: mimir.yaml
@@ -34,7 +34,7 @@ spec:
                 matchLabels: {{include "selectorLabels" . | nindent 18}}
               topologyKey: topology.kubernetes.io/zone
       containers:
-        - name: mimir
+        - name: {{include "name" .}}
           image: grafana/mimir:{{ .Values.image.tag }}
           imagePullPolicy: IfNotPresent
           args:
