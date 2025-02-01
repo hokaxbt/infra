@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mimir
+  labels: {{include "labels" . | nindent 4}}
+data:
+  mimir.yaml: {{include "config" . | nindent 4}}

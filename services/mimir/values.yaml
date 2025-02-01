@@ -1,0 +1,16 @@
+image:
+  tag: "2.15.0"
+replicas: 3
+secret: hetzner-s3-credentials
+s3:
+  bucket: "kubernetes-mimir-data"
+volume:
+  size: 1Gi
+  storageClass: nvme
+resources:
+  requests:
+    memory: "100Mi"
+    cpu: "10m"
+  limits:
+    memory: "250Mi"
+    cpu: "100m"
