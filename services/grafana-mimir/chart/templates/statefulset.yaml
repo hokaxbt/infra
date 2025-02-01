@@ -53,11 +53,11 @@ spec:
                 - ALL
             allowPrivilegeEscalation: false
           ports:
-            - containerPort: 3100
+            - containerPort: 8080
               name: http
               protocol: TCP
             - containerPort: 7946
-              name: gossip
+              name: memberlist
               protocol: TCP
           resources: {{toYaml .Values.resources | nindent 12}}
           startupProbe:
