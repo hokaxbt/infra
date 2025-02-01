@@ -1,0 +1,9 @@
+---
+- name: Restart kubelet
+  hosts: all
+  remote_user: root
+  tasks:
+    - name: Restart kubelet
+      service:
+        name: kubelet
+        state: restarted

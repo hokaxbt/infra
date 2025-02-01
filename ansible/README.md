@@ -25,7 +25,7 @@ workers:
 Then run the playbook using the following command:
 
 ```sh
-ansible-playbook -i inventory.yaml -b --private-key=~/.ssh/id_ed25519 <playbook>
+ansible-playbook -i inventory.yaml playbooks/restart_kubelet.yaml
 ```
 
 ## Playbooks
