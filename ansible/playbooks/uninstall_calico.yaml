@@ -22,3 +22,7 @@
       service:
         name: kubelet
         state: restarted
+
+    - name: Uninstall Calico | Cleaning all calico
+      shell: |
+        for i in `iptables -L | grep cali | awk '{print $2}'`; do iptables -F $i && iptables -X $i; done
