@@ -21,7 +21,7 @@ helm repo update
 Install flannel:
 
 ```shell
-helm install flannel --set podCidr="192.168.0.0/16" -n flannel-system flannel/flannel
+helm install flannel flannel/flannel -n flannel-system --values values.yaml
 ```
 
 ## Verification
