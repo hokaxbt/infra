@@ -1,0 +1,24 @@
+---
+- name: Uninstall Calico
+  hosts: all
+  remote_user: root
+  tasks:
+    - name: Uninstall Calico | Remove 10-calico.conflist
+      file:
+        path: /etc/cni/net.d/10-calico.conflist
+        state: absent
+
+    - name: Uninstall Calico | Remove 10-crio-bridge.conflist.disabled
+      file:
+        path: /etc/cni/net.d/10-crio-bridge.conflist.disabled
+        state: absent
+
+    - name: Uninstall Calico | Remove calico-kubeconfig
+      file:
+        path: /etc/cni/net.d/calico-kubeconfig
+        state: absent
+
+    - name: Uninstall Calico | Restart kubelet
+      service:
+        name: kubelet
+        state: restarted
