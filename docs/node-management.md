@@ -151,6 +151,7 @@ Step by step:
     kubectl label node <name> node-role.kubernetes.io/worker=""
     kubectl label node <name> topology.kubernetes.io/region="fsn1"
     kubectl label node <name> topology.kubernetes.io/zone="fsn1-dc14"
+    kubectl label node <name> disktype="nvme"
     ```
 
 ## Remove Worker Node
