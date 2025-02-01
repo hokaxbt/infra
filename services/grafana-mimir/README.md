@@ -1,6 +1,6 @@
-# Mimir
+# Grafana Mimir
 
-Mimir is ...
+Grafana Mimir is ...
 
 ## Getting started
 
