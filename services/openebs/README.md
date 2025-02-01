@@ -55,10 +55,8 @@ kubectl delete -f nvme-test.yaml
 
 -   Make sure all worker nodes have LVM volume group called `ubuntu-vg`
 -   Make sure at least one worker node have `disktype="nvme"` label
-
-## TODO
-
--   Setup dedicated label for SSD/HDD based worker nodes
+-   You can double check the installation by
+    [deploying statefulsets](https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/)
 
 ## References
 
