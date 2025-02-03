@@ -1,0 +1,16 @@
+cluster:
+  name: "hoka"
+
+global:
+  scrapeInterval: 60s
+
+destinations:
+  - name: Grafana Mimir
+    type: prometheus
+    url: http://grafana-mimir.monitoring.svc.cluster.local/api/v1/push
+
+clusterMetrics:
+  enabled: true
+
+alloy-metrics:
+  enabled: true
