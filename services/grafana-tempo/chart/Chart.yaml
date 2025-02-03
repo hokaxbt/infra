@@ -1,0 +1,6 @@
+apiVersion: v2
+name: grafana-tempo
+description: Hoka's helm chart to deploy Grafana Tempo
+type: application
+version: "0.0.1"
+appVersion: "0.0.1"

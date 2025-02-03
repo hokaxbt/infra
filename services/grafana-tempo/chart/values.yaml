@@ -1,0 +1,74 @@
+# Docs:
+# https://grafana.com/docs/tempo/latest/configuration/
+config:
+  multitenancy_enabled: false
+
+  server:
+    http_listen_port: 3200
+    grpc_listen_port: 9095
+    log_level: debug
+
+  distributor:
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+          http:
+
+  ingester:
+    lifecycler:
+      ring:
+        replication_factor: 3
+    flush_all_on_shutdown: true
+
+  # query_frontend
+  compactor:
+    compaction:
+      block_retention: 336h # 14 days
+
+  storage:
+    trace:
+      backend: s3
+      s3:
+        bucket: "{{ .Values.s3.bucket }}"
+        endpoint: ${S3_ENDPOINT}
+        region: ${S3_REGION}
+        access_key: ${S3_ACCESS_KEY}
+        secret_key: ${S3_SECRET_KEY}
+      wal:
+        path: "/data/tempo/trace/wal"
+
+  memberlist:
+    advertise_port: 7946
+    abort_if_cluster_join_fails: true
+    join_members:
+      - 'dnssrv+{{ include "name" . }}-memberlist.{{ .Release.Namespace }}.svc.cluster.local:7946'
+
+  usage_report:
+    reporting_enabled: false
+
+# Grafana Tempo docker image configuration
+image:
+  tag: "2.7.0"
+
+# Replica count
+replicas: 3
+
+# Grafana Tempo S3 secret
+secret: null
+
+# Grafana Tempo volume
+volume:
+  size: 1Gi
+  storageClass: null
+
+s3:
+  bucket: null
+
+resources:
+  requests:
+    memory: "100Mi"
+    cpu: "10m"
+  limits:
+    memory: "250Mi"
+    cpu: "100m"
