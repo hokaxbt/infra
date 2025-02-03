@@ -4,4 +4,4 @@ metadata:
   name: {{include "name" .}}
   labels: {{include "labels" . | nindent 4}}
 data:
-  mimir.yaml: {{include "config" . | nindent 4}}
+  config.yaml: {{include "config" . | nindent 4}}

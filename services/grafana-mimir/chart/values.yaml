@@ -4,7 +4,6 @@ config:
   target: all
 
   multitenancy_enabled: false
-  no_auth_tenant: "anonymous"
 
   server:
     http_listen_port: 8080
@@ -24,7 +23,6 @@ config:
       sync_dir: "/mimir/tsdb-sync/"
     tsdb:
       dir: "/mimir/tsdb"
-      wal_segment_size_bytes: 200000000 # 200MB
       flush_blocks_on_shutdown: true
       memory_snapshot_on_shutdown: true
 

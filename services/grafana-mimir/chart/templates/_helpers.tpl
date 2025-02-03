@@ -2,10 +2,6 @@
 {{- .Release.Name | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{- define "serviceName" -}}
-{{- printf "mimir-%s" .Values.image.tag | replace "+" "_" | trunc 63 | trimSuffix "-" }}
-{{- end }}
-
 {{- define "chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
