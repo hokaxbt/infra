@@ -34,12 +34,6 @@ Run the following command to deploy mimir:
 helm install grafana-mimir ./chart -n monitoring --values values.yaml
 ```
 
-Run the following command to upgrade mimir:
-
-```shell
-helm upgrade grafana-mimir ./chart -n monitoring --values values.yaml
-```
-
 ## Uninstall
 
 Run the following command to uninstall the Grafana Mimir:
