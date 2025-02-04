@@ -1,0 +1,20 @@
+# Docs: https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-reconfigure/
+---
+- name: Reconfigure Kubelet
+  hosts: all
+  serial: 1
+  remote_user: root
+  tasks:
+    # Make sure to update the `KubeletConfiguration`
+    #
+    #   kubectl edit cm -n kube-system kubelet-config
+    #
+    - name: Download KubeletConfig
+      shell: |
+        kubeadm upgrade node phase kubelet-config
+      notify: Restart kubelet
+  handlers:
+    - name: Restart kubelet
+      service:
+        name: kubelet
+        state: restarted

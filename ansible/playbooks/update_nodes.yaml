@@ -1,0 +1,22 @@
+# Use this to update and reboot node one by one
+---
+- name: Update Nodes
+  hosts: all
+  serial: 1
+  remote_user: root
+  tasks:
+    - name: Update Nodes | Update apt-cache and do dist upgrade
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+        upgrade: dist
+
+    - name: Update Nodes | Check if reboot required
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file
+
+    - name: Update Nodes | Reboot if required
+      reboot:
+        reboot_timeout: 3600
+      when: reboot_required_file.stat.exists == true

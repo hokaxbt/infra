@@ -26,6 +26,8 @@ Then run the playbook using the following command:
 
 ```sh
 ansible-playbook -i inventory.yaml playbooks/restart_kubelet.yaml
+ansible-playbook -i inventory.yaml playbooks/reconfigure_kubelet.yaml
+ansible-playbook -i inventory.yaml playbooks/update_nodes.yaml
 ```
 
 ## Playbooks
