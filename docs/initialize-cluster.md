@@ -42,6 +42,10 @@ mode: iptables
 apiVersion: kubelet.config.k8s.io/v1beta1
 kind: KubeletConfiguration
 serverTLSBootstrap: true
+imageMinimumGCAge: 2m
+imageMaximumGCAge: 24h
+imageGCHighThresholdPercent: 60
+imageGCLowThresholdPercent: 50
 EOF
 ```
 
