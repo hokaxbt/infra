@@ -1,8 +1,8 @@
 # Ansible Playbook
 
-## Getting started
+### Inventory File
 
-Create new `inventory.yaml` file with the following contents:
+Create a new `inventory.yaml` file with the following contents:
 
 ```yaml
 controllers:
@@ -22,21 +22,29 @@ workers:
                 zone: fsn1-dc4
 ```
 
-Then run the playbook using the following command:
+### Running Playbooks
+
+To run the playbooks, use the following commands:
 
 ```sh
-ansible-playbook -i inventory.yaml playbooks/restart_kubelet.yaml
-ansible-playbook -i inventory.yaml playbooks/reconfigure_kubelet.yaml
-ansible-playbook -i inventory.yaml playbooks/update_nodes.yaml
+ansible-playbook -i inventory.yaml playbooks/<name>.yaml
 ```
 
 ## Playbooks
 
--   `bootstrap_nodes.yaml`: Install all required dependencies for Kubernetes
-    nodes
--   `enable_kubelet_tls.yaml`:
-    [Configure](https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/#kubelet-serving-certs)
-    existing cluster to allow metrics-server
+| Playbook Name                 | Description                                                                                                                                 |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `bootstrap_nodes.yaml`        | Installs all required dependencies for Kubernetes nodes.                                                                                    |
+| `enable_kubelet_tls.yaml`     | Configures the existing cluster to allow metrics-server by enabling signed kubelet serving certificates.                                    |
+| `restart_kubelet.yaml`        | Restarts the kubelet service on all nodes.                                                                                                  |
+| `reconfigure_kubelet.yaml`    | Reconfigures the kubelet service on all nodes.                                                                                              |
+| `update_nodes.yaml`           | Updates the nodes by performing a distribution upgrade and rebooting if necessary.                                                          |
+| `check_distribution.yaml`     | Checks the OS distribution and version to ensure they match the expected values.                                                            |
+| `update_upgrade_dist.yaml`    | Updates the package cache and performs a distribution upgrade. It also checks if a reboot is required and performs the reboot if necessary. |
+| `install_cloudflare_dns.yaml` | Configures Cloudflare DNS settings using systemd-networkd and systemd-resolved.                                                             |
+| `secure_ssh.yaml`             | Secures SSH by adding authorized keys, disabling empty password login, disabling password login, and enabling PAM.                          |
+| `install_kubernetes.yaml`     | Installs kubeadm, CRI-O, kubelet, and kubectl.                                                                                              |
+| `install_wireguard.yaml`      | Installs Wireguard and checks if a reboot is required.                                                                                      |
 
 ## References
 
