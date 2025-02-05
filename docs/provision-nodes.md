@@ -1,22 +1,5 @@
 # Provision Nodes
 
-We use hybrid setup here where the control plane nodes are running on Hetzner
-Cloud and the data nodes are running on Hetzner Bare Metal.
-
-## Control Plane Nodes
-
-`hcloud` must be installed to create the control plane nodes. Please refer to
-[Hetzner Cloud CLI's documentation](https://github.com/hetznercloud/cli) to get
-started.
-
-Once `hcloud` is set up properly, create the control plane nodes as follows:
-
-```shell
-hcloud server create --name <name> --type cax11 --image ubuntu-24.04 --location fsn1 --ssh-key macbook,imac --placement-group kubernetes
-```
-
-## Worker Nodes
-
 Assuming you have ordered server from Hetzner and
 [Rescue System](https://docs.hetzner.com/robot/dedicated-server/troubleshooting/hetzner-rescue-system/)
 is activated.
@@ -30,7 +13,11 @@ ssh root@<server-ip>
 Then run the image installer:
 
 ```shell
-installimage -n <hostname> -r yes -l 0 -p /boot:ext3:1G,lvm:ubuntu-vg:all -v ubuntu-vg:root:/:ext4:10G
+# control plane node
+installimage -n <hostname> -r yes -l 0 -p /boot:ext3:1G,lvm:ubuntu-vg:all -v ubuntu-vg:root:/:ext4:all
+
+# worker node
+installimage -n <hostname> -r yes -l 0 -p /boot:ext3:1G,lvm:ubuntu-vg:all -v ubuntu-vg:root:/:ext4:50G
 ```
 
 Then select Ubuntu 24.04, press `fn+f10` then wait for installer to finish.

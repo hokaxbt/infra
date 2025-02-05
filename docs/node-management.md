@@ -9,7 +9,7 @@
    directory.
 
     ```shell
-    ansible-playbook -i inventory.yaml -l <new-control-plane-hostname> -b --private-key=~/.ssh/id_ed25519 playbooks/bootstrap_nodes.yaml
+    ansible-playbook -i inventory.yaml -l <new-control-plane-hostname> playbooks/bootstrap_nodes.yaml
     ```
 
 4. Get the join command by running the following command in one of the control
