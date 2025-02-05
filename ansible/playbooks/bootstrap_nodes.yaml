@@ -4,5 +4,5 @@
 - import_playbook: ./install_cloudflare_dns.yaml
 - import_playbook: ./secure_ssh.yaml
 - import_playbook: ./install_wireguard.yaml
-- import_playbook: ./install_etcd.yaml
+- import_playbook: ./install_etcd_client.yaml
 - import_playbook: ./install_kubernetes.yaml
