@@ -47,7 +47,7 @@
 9. Add the control plane node to load balancer.
 
     ```shell
-    hcloud load-balancer add-target kubernetes --server controller-4
+    hcloud load-balancer add-target kubernetes --ip <controller-ip>
     ```
 
 ## Remove Control Plane Node
@@ -65,7 +65,7 @@
     ```
 
 3. Remove control plane node from `ansible/inventory.yaml`
-4. Remove etcd member from the cluster.
+4. Remove etcd member from the cluster, ssh to one of the control plane node:
 
     ```shell
     ETCDCTL_API=3 etcdctl \
@@ -86,7 +86,7 @@
 5. Remove control plane node from load balancer.
 
     ```shell
-    hcloud load-balancer remove-target kubernetes --server controller-1
+    hcloud load-balancer remove-target kubernetes --server <name>
     ```
 
 6. Delete server
