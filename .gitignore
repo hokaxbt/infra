@@ -2,3 +2,4 @@ NOTES*.md
 inventory.yaml
 cluster.conf
 .DS_Store
+default-values.yaml
