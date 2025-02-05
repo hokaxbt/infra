@@ -45,7 +45,3 @@ ansible-playbook -i inventory.yaml playbooks/<name>.yaml
 | `secure_ssh.yaml`             | Secures SSH by adding authorized keys, disabling empty password login, disabling password login, and enabling PAM.                          |
 | `install_kubernetes.yaml`     | Installs kubeadm, CRI-O, kubelet, and kubectl.                                                                                              |
 | `install_wireguard.yaml`      | Installs Wireguard and checks if a reboot is required.                                                                                      |
-
-## References
-
--   [Overriding netplan configuration](https://askubuntu.com/a/1483563)
