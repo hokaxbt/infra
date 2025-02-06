@@ -1,15 +1,16 @@
 # Bootstrap Nodes
 
-`ansible` must be installed to provision the nodes. Please refer to
-[Ansible's documentation](https://github.com/hetznercloud/cli) to get started.
+To provision the nodes, you need Ansible installed. Please refer to
+[Ansible's documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+for installation instructions.
 
-Add the following config to your `~/.ssh/config`:
+Add the following configuration to your `~/.ssh/config` file:
 
 ```shell
 StrictHostKeyChecking=accept-new
 ```
 
-This will remove the annoying add new key prompt while not disable the checking.
+This will remove the annoying prompt while not disabling key checking.
 
 Add your SSH private key to `ssh-agent` to bypass the passkey prompt:
 
@@ -17,31 +18,49 @@ Add your SSH private key to `ssh-agent` to bypass the passkey prompt:
 ssh-add ~/.ssh/id_ed25519
 ```
 
-Create new `inventory.yaml` in `ansible` directory as follows:
+Create a new `inventory.yaml` file in the `ansible` directory as follows:
 
-```sh
+```yaml
 controllers:
   hosts:
-    controller-1:
+    controller-5:
       ansible_host: <ip>
-    controller-2:
+      topology:
+        region: fsn1
+        zone: fsn1-dc1
+    controller-6:
       ansible_host: <ip>
-    controller-3:
+      topology:
+        region: fsn1
+        zone: fsn1-dc13
+    controller-7:
       ansible_host: <ip>
+      topology:
+        region: fsn1
+        zone: fsn1-dc6
 
 workers:
   hosts:
     worker-1:
       ansible_host: <ip>
+      topology:
+        region: fsn1
+        zone: fsn1-dc4
     worker-2:
       ansible_host: <ip>
+      topology:
+        region: fsn1
+        zone: fsn1-dc8
     worker-3:
       ansible_host: <ip>
-
+      topology:
+        region: fsn1
+        zone: fsn1-dc15
 ```
 
-Once `ansible` is set up properly, setup nodes as follows:
+Once the [ansible](../ansible/) environment is set up properly, you can
+bootstrap nodes using the following command:
 
 ```sh
-ansible-playbook -i inventory.yaml -b -v --private-key=~/.ssh/id_ed25519 bootstrap_nodes.yaml
+ansible-playbook -i inventory.yaml playbooks/bootstrap_nodes.yaml
 ```
