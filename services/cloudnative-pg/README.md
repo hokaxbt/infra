@@ -44,6 +44,21 @@ You should see pods related to the CloudNative PG Operator running. If
 everything is set up correctly, you should be ready to create and manage your
 PostgreSQL clusters using CloudNative PG.
 
+## Plugins
+
+Install the `cnpg` plugin for `kubectl` to simplify the management of your
+PostgreSQL clusters. Use the following command to install the plugin:
+
+```shell
+brew install kubectl-cnpg
+```
+
+Get the status of postgres cluster using the following command:
+
+```shell
+kubectl cnpg status grafana-db -n monitoring
+```
+
 ## References
 
 - [CloudNativePG Helm Charts](https://github.com/cloudnative-pg/charts)
