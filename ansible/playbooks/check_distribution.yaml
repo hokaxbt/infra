@@ -12,6 +12,4 @@
         that:
           - ansible_distribution == distribution
           - ansible_distribution_version == distribution_version
-        msg:
-          "Expected {{distribution}} {{distribution_version}}, Got
-          {{ansible_distribution}} {{ansible_distribution_version}}"
+        msg: "Expected {{distribution}} {{distribution_version}}, Got {{ansible_distribution}} {{ansible_distribution_version}}"

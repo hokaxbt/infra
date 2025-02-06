@@ -6,20 +6,20 @@ Create a new `inventory.yaml` file with the following contents:
 
 ```yaml
 controllers:
-    hosts:
-        <hostname>:
-            ansible_host: <ip>
-            topology:
-                region: nbg1
-                zone: nbg1-dc3
+  hosts:
+    <hostname>:
+      ansible_host: <ip>
+      topology:
+        region: nbg1
+        zone: nbg1-dc3
 
 workers:
-    hosts:
-        <hostname>:
-            ansible_host: <ip>
-            topology:
-                region: fsn1
-                zone: fsn1-dc4
+  hosts:
+    <hostname>:
+      ansible_host: <ip>
+      topology:
+        region: fsn1
+        zone: fsn1-dc4
 ```
 
 ### Running Playbooks
