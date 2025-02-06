@@ -1,0 +1,12 @@
+{
+  "docs": [
+    {
+      "title": "CloudNativePG",
+      "startUrl": "https://cloudnative-pg.io/documentation/1.25/"
+    },
+    {
+      "title": "Kubernetes",
+      "startUrl": "https://kubernetes.io/docs/home/"
+    }
+  ]
+}
