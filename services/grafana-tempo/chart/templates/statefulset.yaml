@@ -53,10 +53,10 @@ spec:
                 - ALL
             allowPrivilegeEscalation: false
           ports:
-            - containerPort: 3200
+            - containerPort: {{.Values.server.httpListenPort}}
               name: http
               protocol: TCP
-            - containerPort: 7946
+            - containerPort: {{.Values.memberlist.advertisePort}}
               name: memberlist
               protocol: TCP
           resources: {{toYaml .Values.resources | nindent 12}}

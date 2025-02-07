@@ -4,4 +4,49 @@ metadata:
   name: {{include "name" .}}
   labels: {{include "labels" . | nindent 4}}
 data:
-  config.yaml: {{include "config" . | nindent 4}}
+  config.yaml: |2
+    multitenancy_enabled: false
+
+    server:
+      http_listen_port: {{.Values.server.httpListenPort}}
+      grpc_listen_port: 9095
+      log_level: {{.Values.server.logLevel}}
+
+    distributor:
+      receivers:
+        otlp:
+          protocols:
+            grpc:
+            http:
+
+    ingester:
+      lifecycler:
+        ring:
+          replication_factor: 3
+      flush_all_on_shutdown: true
+
+    # query_frontend
+    compactor:
+      compaction:
+        block_retention: 336h # 14 days
+
+    storage:
+      trace:
+        backend: s3
+        s3:
+          bucket: "{{ .Values.s3.bucket }}"
+          endpoint: ${S3_ENDPOINT}
+          region: ${S3_REGION}
+          access_key: ${S3_ACCESS_KEY}
+          secret_key: ${S3_SECRET_KEY}
+        wal:
+          path: "/data/tempo/trace/wal"
+
+    memberlist:
+      advertise_port: {{.Values.memberlist.advertisePort}}
+      abort_if_cluster_join_fails: true
+      join_members:
+        - 'dnssrv+{{ include "name" . }}-memberlist.{{ .Release.Namespace }}.svc.cluster.local:{{.Values.memberlist.advertisePort}}'
+
+    usage_report:
+      reporting_enabled: false
