@@ -24,7 +24,13 @@ Install flannel:
 helm install flannel flannel/flannel -n flannel-system --values values.yaml
 ```
 
-## Verification
+## Verify Installation
+
+Make sure pods running:
+
+```shell
+kubectl get pods -n flannel-system -o wide
+```
 
 Test internal DNS query:
 
