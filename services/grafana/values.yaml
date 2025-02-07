@@ -55,3 +55,7 @@ envValueFrom:
     secretKeyRef:
       name: grafana-db-app
       key: password
+
+sidecar:
+  datasources:
+    enabled: true

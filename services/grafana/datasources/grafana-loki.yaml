@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: grafana-datasources-loki
+  namespace: monitoring
+  labels:
+    grafana_datasource: ""
+stringData:
+  data.yaml: |-
+    apiVersion: 1
+    datasources:
+      - name: Grafana Loki
+        type: loki
+        uid: grafana-loki
+        url: http://grafana-loki.monitoring.svc.cluster.local
+        isDefault: false
+        editable: false

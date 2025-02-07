@@ -32,6 +32,12 @@ Run the following command to install Grafana:
 helm install grafana grafana/grafana -n monitoring -f values.yaml
 ```
 
+Run the following command to update Grafana installation:
+
+```shell
+helm upgrade grafana grafana/grafana -n monitoring -f values.yaml
+```
+
 ## Default values
 
 Run the following command to get default values:
