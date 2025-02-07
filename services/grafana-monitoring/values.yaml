@@ -8,9 +8,21 @@ destinations:
   - name: Grafana Mimir
     type: prometheus
     url: http://grafana-mimir.monitoring.svc.cluster.local/api/v1/push
+  - name: Grafana Loki
+    type: loki
+    url: http://grafana-loki.monitoring.svc.cluster.local/loki/api/v1/push
+
+nodeLogs:
+  enabled: true
+
+podLogs:
+  enabled: true
 
 clusterMetrics:
   enabled: true
 
 alloy-metrics:
+  enabled: true
+
+alloy-logs:
   enabled: true
