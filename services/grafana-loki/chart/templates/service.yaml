@@ -9,4 +9,4 @@ spec:
     - name: http
       protocol: TCP
       port: 80
-      targetPort: 3100
+      targetPort: {{.Values.server.httpListenPort}}
