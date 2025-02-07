@@ -38,6 +38,14 @@ Run the following command to update Grafana installation:
 helm upgrade grafana grafana/grafana -n monitoring -f values.yaml
 ```
 
+## Datasources
+
+Run the following command to install datasources:
+
+```shell
+kubectl apply -f ./datasources
+```
+
 ## Default values
 
 Run the following command to get default values:
