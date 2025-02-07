@@ -1,0 +1,13 @@
+---
+- name: Turn Off Swap
+  hosts: all
+  remote_user: root
+  tasks:
+    - name: Turn Off Swap | swapoff
+      shell: |
+        swapoff -a
+    - name: Turn Off Swap | /etc/fstab
+      replace:
+        path: /etc/fstab
+        regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
+        replace: '# \1'

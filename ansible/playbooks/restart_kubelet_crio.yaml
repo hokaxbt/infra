@@ -3,6 +3,10 @@
   hosts: all
   remote_user: root
   tasks:
+    - name: Restart CRI-O
+      service:
+        name: cri-o
+        state: restarted
     - name: Restart kubelet
       service:
         name: kubelet
