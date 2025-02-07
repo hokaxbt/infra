@@ -1,0 +1,34 @@
+# Cert Manager Test to validate the setup
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cert-manager-test-hoka-tls
+  namespace: cert-manager-test
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cert-manager-test-hoka
+  namespace: cert-manager-test
+  labels:
+    app.kubernetes.io/name: cert-manager-test-hoka
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  ingressClassName: nginx
+  tls:
+    - secretName: cert-manager-test-hoka-tls
+      hosts:
+        - cert-manager-test.hokaxbt.com
+
+  rules:
+    - host: cert-manager-test.hokaxbt.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: cert-manager-test
+                port:
+                  number: 80
