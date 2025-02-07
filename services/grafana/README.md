@@ -7,26 +7,10 @@ Grafana is ...
 In order to run highly available Grafana Dashboard we need to run highly
 available postgres first.
 
-Add and update Helm repo:
-
-```shell
-helm repo add grafana https://grafana.github.io/helm-charts
-helm repo update
-```
-
-Create a Kubernetes Secret to store the database name, username, and password.
-Run the following command to create a secret:
-
-```shell
-kubectl create secret generic grafana-db -n monitoring \
-  --from-literal=username=postgres \
-  --from-literal=password=password
-```
-
 Run the following command to install Postgres HA:
 
 ```shell
-kubectl apply -f postgres.yaml -n monitoring
+kubectl apply -f resources.yaml
 ```
 
 Wait for the cluster to be up and running:
@@ -35,16 +19,17 @@ Wait for the cluster to be up and running:
 kubectl wait --for=condition=Ready pod -l cnpg.io/cluster=grafana-db -n monitoring --timeout=300s
 ```
 
-Get the connection url using the following command:
+Add and update Helm repo:
 
 ```shell
-kubectl get secret grafana-db-app -o json | jq -r ".data.uri" | base64 --decode
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
 ```
 
-Access the postgresql using the following command:
+Run the following command to install Grafana:
 
 ```shell
-kubectl cnpg psql grafana-db -n monitoring
+helm install grafana grafana/grafana -n monitoring -f values.yaml
 ```
 
 ## Default values
@@ -53,6 +38,20 @@ Run the following command to get default values:
 
 ```shell
 helm show values grafana/grafana > default-values.yaml
+```
+
+## Grafana DB
+
+Get the connection url using the following command:
+
+```shell
+kubectl get secret grafana-db-app -n monitoring -o jsonpath="{.data.uri}" | base64 -d
+```
+
+Access the postgresql using the following command:
+
+```shell
+kubectl cnpg psql grafana-db -n monitoring
 ```
 
 ## References

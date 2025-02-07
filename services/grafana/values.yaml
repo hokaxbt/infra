@@ -1,10 +1,14 @@
 replicas: 3
+
 image:
   tag: "11.5.1"
+
 testFramework:
   enabled: false
+
 ingress:
   enabled: true
+  ingressClassName: nginx
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
   hosts:
@@ -13,9 +17,41 @@ ingress:
     - secretName: grafana-tls
       hosts:
         - grafana.hokaxbt.com
+
 topologySpreadConstraints:
   - maxSkew: 1
     topologyKey: topology.kubernetes.io/zone
     whenUnsatisfiable: DoNotSchedule
     labelSelector:
-      matchLabels: {{include "grafana.selectorLabels" .}}
+      matchLabels:
+        app.kubernetes.io/name: grafana
+
+persistence:
+  enabled: false
+
+grafana.ini:
+  database:
+    type: postgres
+    host: ${DATABASE_HOST}
+    name: ${DATABASE_NAME}
+    user: ${DATABASE_USER}
+    password: ${DATABASE_PASS}
+    ssl_mode: disable
+
+envValueFrom:
+  DATABASE_HOST:
+    secretKeyRef:
+      name: grafana-db-app
+      key: host
+  DATABASE_NAME:
+    secretKeyRef:
+      name: grafana-db-app
+      key: dbname
+  DATABASE_USER:
+    secretKeyRef:
+      name: grafana-db-app
+      key: username
+  DATABASE_PASS:
+    secretKeyRef:
+      name: grafana-db-app
+      key: password

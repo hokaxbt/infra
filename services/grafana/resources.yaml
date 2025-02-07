@@ -2,6 +2,7 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: grafana-db
+  namespace: monitoring
 spec:
   instances: 3
   storage:
@@ -11,10 +12,12 @@ spec:
     kind: ClusterImageCatalog
     name: postgresql
     major: 17
-  enableSuperuserAccess: true
-  bootstrap:
-    initdb:
-      database: postgres
+  managed:
+    roles:
+      - name: grafana
+        ensure: present
+        login: true
+        createdb: true
   topologySpreadConstraints:
     - maxSkew: 1
       topologyKey: topology.kubernetes.io/zone
@@ -22,3 +25,9 @@ spec:
       labelSelector:
         matchLabels:
           cnpg.io/cluster: grafana-db
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: grafana-tls
+  namespace: monitoring
