@@ -25,9 +25,3 @@ spec:
       labelSelector:
         matchLabels:
           cnpg.io/cluster: grafana-db
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: grafana-tls
-  namespace: monitoring
