@@ -10,17 +10,12 @@ image:
 
 # Replica count
 replicas: 3
-
-# Grafana Mimir S3 secret
-secret: null
+replicationFactor: 3
 
 # Grafana Mimir volume
 volume:
   size: 1Gi
   storageClass: null
-
-s3:
-  bucket: null
 
 resources:
   requests:

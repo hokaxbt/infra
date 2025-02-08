@@ -5,6 +5,7 @@ metadata:
   labels: {{include "labels" . | nindent 4}}
 data:
   config.yaml: |2
+
     target: all
 
     multitenancy_enabled: false
@@ -14,6 +15,10 @@ data:
       grpc_listen_port: 9095
       log_level: {{.Values.config.server.log_level}}
       log_format: logfmt
+
+    ingester:
+      ring:
+        replication_factor: {{.Values.replicationFactor}}
 
     limits:
       compactor_blocks_retention_period: 672h # 28 days
@@ -33,6 +38,10 @@ data:
     compactor:
       data_dir: "/mimir/compactor"
 
+    store_gateway:
+      sharding_ring:
+        replication_factor: {{.Values.replicationFactor}}
+
     ruler:
       rule_path: "/mimir/ruler"
 
@@ -41,6 +50,8 @@ data:
 
     alertmanager:
       data_dir: "/mimir/alertmanager/"
+      sharding_ring:
+        replication_factor: {{.Values.replicationFactor}}
 
     alertmanager_storage:
       storage_prefix: "alertmanager"
@@ -54,13 +65,9 @@ data:
     # Common configuration to be shared between multiple components
     common:
       storage:
-        backend: s3
-        s3:
-          bucket_name: "{{ .Values.s3.bucket }}"
-          endpoint: ${S3_ENDPOINT}
-          region: ${S3_REGION}
-          access_key_id: ${S3_ACCESS_KEY}
-          secret_access_key: ${S3_SECRET_KEY}
+        backend: filesystem
+        filesystem:
+          dir: "/mimir/data"
 
     # Configuration for analytics.
     usage_stats:
