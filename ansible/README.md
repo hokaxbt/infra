@@ -28,6 +28,7 @@ To run the playbooks, use the following commands:
 
 ```sh
 ansible-playbook -i inventory.yaml playbooks/<name>.yaml
+ansible-playbook -i inventory-etcd-backup.yaml playbooks/etcd_daily_backup.yaml
 ```
 
 ## Playbooks

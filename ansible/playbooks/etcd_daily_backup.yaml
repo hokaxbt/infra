@@ -1,0 +1,52 @@
+---
+- name: etcd daily backup
+  hosts: controller
+  remote_user: root
+  tasks:
+    - name: Install packages
+      apt:
+        pkg:
+          - etcd-client
+          - cron
+        state: latest
+        update_cache: true
+
+    - name: Enable cron service
+      systemd:
+        name: cron
+        enabled: true
+        state: started
+
+    - name: Download mc binary
+      get_url:
+        url: https://dl.min.io/client/mc/release/linux-amd64/mc
+        dest: /usr/local/bin/mc
+        mode: "+x"
+
+    - name: Configure mc to connect to S3
+      command: mc alias set s3 {{s3_endpoint}} {{s3_access_key}} {{s3_secret_key}} --api s3v4 --path off
+      args:
+        creates: /root/.mc/config.json
+
+    - name: Copy etcd_backup.sh
+      copy:
+        src: ./files/etcd_backup.sh
+        dest: /root/etcd_backup.sh
+        owner: root
+        group: root
+        mode: "+x"
+
+    - name: Copy etcd_restore.sh
+      copy:
+        src: ./files/etcd_restore.sh
+        dest: /root/etcd_restore.sh
+        owner: root
+        group: root
+        mode: "+x"
+
+    - name: Add cron job to run etcd_backup.sh daily
+      cron:
+        name: "etcd daily backup"
+        special_time: daily
+        job: "/root/etcd_backup.sh"
+        user: root
