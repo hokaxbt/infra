@@ -2,7 +2,7 @@
 
 global:
   # Set the verbosity of cert-manager. A range of 0 - 6, with 6 being the most verbose.
-  logLevel: 6
+  logLevel: 1
 
 crds:
   enabled: true
@@ -38,7 +38,7 @@ webhook:
   # availability.
   #
   # If `replicas > 1`, consider setting `webhook.podDisruptionBudget.enabled=true`.
-  replicaCount: 2
+  replicaCount: 1
 
   extraArgs:
     - --logging-format=json
@@ -68,7 +68,7 @@ cainjector:
   #
   # Note that cert-manager uses leader election to ensure that there can
   # only be a single instance active at a time.
-  replicaCount: 2
+  replicaCount: 1
 
   extraArgs:
     - --logging-format=json

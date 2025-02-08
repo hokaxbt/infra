@@ -25,7 +25,7 @@ helm install cert-manager jetstack/cert-manager \
 Create cluster issuer:
 
 ```shell
-kubectl create -f config/cert-manager-cluster-issuer.yaml
+kubectl create -f cert-manager-cluster-issuer.yaml
 ```
 
 Make sure the DNS of `tickerhot.com` is pointed to load balancer IP.
@@ -33,10 +33,10 @@ Make sure the DNS of `tickerhot.com` is pointed to load balancer IP.
 To validate the installation, create service test using the following command:
 
 ```shell
-kubectl create -f config/cert-manager-test.yaml
+kubectl create -f cert-manager-test.yaml
 ```
 
-Access `https://cert-manager-test.tickerhot.com`.
+Access `https://cert-manager-test.hokaxbt.com`.
 
 If you need to uninstall, run the following command:
 

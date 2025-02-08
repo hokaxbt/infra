@@ -3,3 +3,4 @@
 3. [Install OpenEBS CSI](../services/openebs/README.md)
 4. [Install Metrics Server](../services/metrics-server/README.md)
 5. [Install Ingress NGINX](../services/ingress-nginx/README.md)
+6. [Install Cert Manager](../services/cert-manager/README.md)
