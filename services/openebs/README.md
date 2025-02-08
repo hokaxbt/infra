@@ -22,15 +22,6 @@ helm install openebs openebs/openebs \
     --values values.yaml
 ```
 
-or upgrade existing installation:
-
-```shell
-helm upgrade openebs openebs/openebs \
-    --namespace openebs \
-    --create-namespace \
-    --values values.yaml
-```
-
 Create storage class:
 
 ```shell
@@ -53,13 +44,13 @@ kubectl delete -f nvme-test.yaml
 
 ## Notes
 
--   Make sure all worker nodes have LVM volume group called `ubuntu-vg`
--   Make sure at least one worker node have `disktype="nvme"` label
--   You can double check the installation by
-    [deploying statefulsets](https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/)
+- Make sure all worker nodes have LVM volume group called `ubuntu-vg`
+- Make sure at least one worker node have `disktype="nvme"` label
+- You can double check the installation by
+  [deploying statefulsets](https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/)
 
 ## References
 
--   [Introduction to LVM](https://www.youtube.com/watch?v=dMHFArkANP8)
--   [OpenEBS LocalPV LVM Installation](https://openebs.io/docs/user-guides/local-storage-user-guide/local-pv-lvm/lvm-installation)
--   [OpenEBS LocalPV LVM Configuration](https://openebs.io/docs/user-guides/local-storage-user-guide/local-pv-lvm/lvm-configuration)
+- [Introduction to LVM](https://www.youtube.com/watch?v=dMHFArkANP8)
+- [OpenEBS LocalPV LVM Installation](https://openebs.io/docs/user-guides/local-storage-user-guide/local-pv-lvm/lvm-installation)
+- [OpenEBS LocalPV LVM Configuration](https://openebs.io/docs/user-guides/local-storage-user-guide/local-pv-lvm/lvm-configuration)
