@@ -7,6 +7,7 @@ image:
 
 # Replica count
 replicas: 3
+replicationFactor: 3
 
 # Grafana Loki volume
 volume:

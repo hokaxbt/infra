@@ -95,7 +95,8 @@ data:
       reporting_enabled: false
 
     common:
-      replication_factor: 3
+      replication_factor: {{.Values.replicationFactor}}
+      path_prefix: /loki
       ring:
         kvstore:
           store: memberlist
