@@ -3,9 +3,7 @@
 ##
 
 controller:
-  # -- Use a `DaemonSet` or `Deployment`
-  kind: Deployment
-  replicaCount: 3
+  kind: DaemonSet
 
   tolerations:
     - key: "node-role.kubernetes.io/master"
@@ -15,35 +13,11 @@ controller:
       operator: "Exists"
       effect: "NoSchedule"
 
-  # -- Affinity and anti-affinity rules for server scheduling to nodes
-  ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  ##x1
-  # affinity:
-  #   podAntiAffinity:
-  #     requiredDuringSchedulingIgnoredDuringExecution:
-  #       - labelSelector:
-  #           matchLabels:
-  #             app.kubernetes.io/component: controller
-  #             app.kubernetes.io/instance: "{{ .Release.Name }}"
-  #             app.kubernetes.io/name: '{{ include "ingress-nginx.name" . }}'
-  #         topologyKey: "kubernetes.io/hostname"
-
-  topologySpreadConstraints:
-    - maxSkew: 1
-      topologyKey: "kubernetes.io/hostname"
-      whenUnsatisfiable: ScheduleAnyway
-      labelSelector:
-        matchLabels:
-          app.kubernetes.io/component: controller
-          app.kubernetes.io/instance: "{{ .Release.Name }}"
-          app.kubernetes.io/name: '{{ include "ingress-nginx.name" . }}'
-
-  # nodeSelector:
-  #   node-role.kubernetes.io/control-plane: ""
+  nodeSelector:
+    node-role.kubernetes.io/control-plane: ""
 
   service:
-    type: ClusterIP
-    # nodePorts:
-    #   # -- Node port allocated for the external HTTP listener. If left empty, the service controller allocates one from the configured node port range.
-    #   http: "30080"
-    #   https: "30443"
+    enabled: false
+  hostNetwork: true
+  dnsPolicy: ClusterFirstWithHostNet
+  reportNodeInternalIp: true

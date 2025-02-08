@@ -15,7 +15,7 @@ helm repo update
 Install `ingress-nginx`:
 
 ```shell
-helm install ingress ingress-nginx/ingress-nginx \
+helm install default ingress-nginx/ingress-nginx \
     --namespace ingress-nginx \
     --create-namespace \
     --values values.yaml
@@ -27,53 +27,17 @@ Make sure `ingress-nginx` pods are running:
 kubectl get pods -n ingress-nginx -o wide
 ```
 
-## Setup Cloudflare Tunnel
+This deployment will bind the following ports on the controller host:
 
-Install `cloudflared`:
-
-```shell
-brew install cloudflared
-```
-
-Login to cloudflare:
-
-```shell
-cloudflared tunnel login
-```
-
-Authorize the Cloudflare Tunnel.
-
-Then create new tunnel:
-
-```shell
-cloudflared tunnel create kubernetes-ingress
-```
-
-Create new kubernetes credentials:
-
-```shell
-kubectl create secret generic cloudflare-tunnel-credentials -n ingress-nginx \
-    --from-file=credentials.json=/Users/hokaxbt/.cloudflared/dd0b4dad-9399-40be-a9d0-5490ab55723a.json
-```
-
-Now route tunnel to dns:
-
-```shell
-cloudflared tunnel route dns kubernetes-ingress "*.hokaxbt.com"
-```
-
-## Example
-
-Deploy example:
-
-```shell
-kubectl apply -f ingress-example.yaml
-```
-
-Service should be accessible via `https://ingress-example.hokaxbt.com`.
+- 80 (HTTP)
+- 443 (HTTPS)
+- 8181 (Default webserver)
+-
 
 ## Notes
 
 - Cluster with load balancer: `ingress-nginx` is deployed as DaemonSet that runs
   across control plane nodes and bind port `30080` to serve HTTP traffic and
   port `30443` to serve HTTPS traffic.
+- Single control plane node: `ingress-nginx` is deployed as Deployment that bind
+  to port 80 and 443.
