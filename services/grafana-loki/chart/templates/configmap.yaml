@@ -52,12 +52,6 @@ data:
       filesystem:
         directory: /loki/chunks
 
-    chunk_store_config:
-      chunk_cache_config:
-        embedded_cache:
-          enabled: true
-          max_size_mb: 100
-
     schema_config:
       configs:
         - from: 2025-02-01
@@ -77,16 +71,16 @@ data:
 
     # compactor_grpc_client
     limits_config:
-      retention_period: 672h # 28 days
       volume_enabled: true
+      retention_period: 672h # 28 days
 
     # frontend_worker
     # table_manager
     memberlist:
       advertise_port: {{.Values.memberlist.advertisePort}}
       abort_if_cluster_join_fails: {{.Values.memberlist.abortIfClusterJoinFails}}
-      join_members:
-        - 'dnssrv+{{ include "name" . }}-memberlist.{{ .Release.Namespace }}.svc.cluster.local:7946'
+      # join_members: 
+        # - 'dnssrv+{{ include "name" . }}-memberlist.{{ .Release.Namespace }}.svc.cluster.local:7946'
 
     # runtime_config
     # operational_config
