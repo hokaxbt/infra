@@ -18,7 +18,7 @@ helm repo update
 Run the following command to deploy Grafana Kubernetes Monitoring:
 
 ```shell
-helm install grafana-monitoring grafana/k8s-monitoring -n monitoring --values values.yaml
+helm install grafana-monitoring grafana/k8s-monitoring --create-namespace -n monitoring --values values.yaml
 ```
 
 Run the following command to upgrade Grafana Kubernetes Monitoring:
