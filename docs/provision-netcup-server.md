@@ -7,18 +7,39 @@ Step by step to provision
 
 1. Login to [Server Control Panel](https://www.servercontrolpanel.de/)
 2. Select **Server**
-3. Goto **Media** > Goto **DVD Drive** > Select **Ubuntu 24.04 Live Server** >
+3. Goto **Control** > Click **Shutdown**
+4. Goto **Media** > Goto **DVD Drive** > Select **Ubuntu 24.04 Live Server** >
    Set boot mode > Click **Attach DVD**
-4. Goto **Control** > Click **Shutdown** (Wait 2 minutes) > Click **Start**
-5. Goto **Screen** > Select **Install Ubuntu Server** > Configure the
+5. Goto **Control** > Click **Start**
+6. Goto **Screen** > Select **Install Ubuntu Server** > Configure the
    installation
-6. For **Network Configuration**, Select automatic for ipv4 and wait until test
-   mirror success.
-7. For **Storage Configuration**, Select **Use entire disk**, Resize `ubuntu-lv`
-   to 50GB for worker node, all available disk for controller node
-8. Confirm the installation and click **Reboot now**
-9. Goto **Media** > Click **Detach DVD**
-10. Goto **Control** > Click **Shutdown** (Wait 2 minutes) > Click **Start**
+
+   - For **Network Configuration**, Select automatic for ipv4 and wait until
+     test mirror success. Do not forget to enable automatic ipv6 too.
+   - For **Ubuntu Archive Mirror Configuration**, if failed to test mirror.
+     Click `[help]` on top right of the screen, select **Enter shell**, edit
+     `/etc/netplan/00-installer-config.yaml` and change `nameservers` to
+     `1.1.1.1`. Then run `netplan apply` and `exit` to continue installation.
+
+     ```yaml
+     network:
+       version: 2
+       ethernets:
+         ens3:
+           dhcp4: true
+           nameservers:
+             addresses:
+               - 1.1.1.1
+     ```
+
+   - For **Storage Configuration**, Select **Use entire disk**, Rename
+     `ubuntu-lv` to `root` and resize it to 50GB for worker node, all available
+     space for controller node.
+   - For **SSH Configuration**, import SSH key from GitHub and disable login
+     with password
+
+7. Once installation finished, Goto **Media** > Click **Detach DVD**
+8. Goto **Control** > Click **Powercycle**
 
 ## Setup root user
 
@@ -35,3 +56,23 @@ Step by step to provision
    ```
 
 3. Logout and ssh to server with root user
+
+## Update SSH Configuration (Optional)
+
+1. Run the following command to edit your config:
+
+   ```shell
+   code ~/.ssh/config
+   ```
+
+2. Add the following configuration:
+
+   ```
+   Host controller
+      HostName <ip-address>
+      User hoka
+   ```
+
+## Next step
+
+[Bootstrap Nodes](./bootstrap-nodes.md)

@@ -23,44 +23,22 @@ Create a new `inventory.yaml` file in the `ansible` directory as follows:
 ```yaml
 controllers:
   hosts:
-    controller-5:
-      ansible_host: <ip>
-      topology:
-        region: fsn1
-        zone: fsn1-dc1
-    controller-6:
-      ansible_host: <ip>
-      topology:
-        region: fsn1
-        zone: fsn1-dc13
-    controller-7:
-      ansible_host: <ip>
-      topology:
-        region: fsn1
-        zone: fsn1-dc6
+    controller:
+      ansible_host: <controller-ip>
 
 workers:
   hosts:
     worker-1:
-      ansible_host: <ip>
-      topology:
-        region: fsn1
-        zone: fsn1-dc4
-    worker-2:
-      ansible_host: <ip>
-      topology:
-        region: fsn1
-        zone: fsn1-dc8
-    worker-3:
-      ansible_host: <ip>
-      topology:
-        region: fsn1
-        zone: fsn1-dc15
+      ansible_host: <worker-1-ip>
 ```
 
-Once the [ansible](../ansible/) environment is set up properly, you can
+Once the [ansible](../ansible/README.md) environment is set up properly, you can
 bootstrap nodes using the following command:
 
 ```sh
 ansible-playbook -i inventory.yaml playbooks/bootstrap_nodes.yaml
 ```
+
+## Next step
+
+[Initialize the cluster](./initialize-cluster.md)
