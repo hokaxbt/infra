@@ -31,3 +31,14 @@ This is the source code of my infrastructure.
   [OpenEBS LocalPV LVM](https://openebs.io/docs/user-guides/local-storage-user-guide/local-pv-lvm/lvm-installation)
   as my CSI plugin. See [this guide](./services/openebs/README.md) on how to
   setup OpenEBS.
+- I use
+  [Kubernetes Metrics Server](https://github.com/kubernetes-sigs/metrics-server)
+  to provide metrics API for Kubernetes built-in autoscaling pipeline. See
+  [this guide](./services/metrics-server/README.md) on how to setup Metrics
+  Server.
+- I use [Ingress NGINX](https://kubernetes.github.io/ingress-nginx/) as my
+  ingress. See [this guide](./services/ingress-nginx/README.md) on how to setup
+  Ingress NGINX.
+- I use [Cert Manager](https://cert-manager.io/) to manage my TLS certificates.
+  See [this guide](./services/cert-manager/README.md) on how to setup Cert
+  Manager.
