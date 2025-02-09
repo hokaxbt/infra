@@ -1,6 +1,6 @@
 # HokaXBT's Infrastructure
 
-This is source code of my infrastructure.
+This is the source code of my infrastructure.
 
 ## Infrastructure Providers
 
@@ -12,8 +12,8 @@ This is source code of my infrastructure.
 
 ## Kubernetes
 
-- I use simple cluster configuration with single control plane node and multiple
-  worker nodes.
+- I use a simple cluster configuration with single control plane node and
+  multiple worker nodes.
 - I use [Ansible](https://docs.ansible.com/) to bootstrap and configure my
   Kubernetes nodes. See [this guide](./docs/bootstrap-nodes.md) on how to
   bootstrap Kubernetes nodes.
