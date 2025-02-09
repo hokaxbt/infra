@@ -23,7 +23,7 @@ This is the source code of my infrastructure.
   [this guide](./docs/initialize-cluster.md) on how to initialize a Kubernetes
   cluster.
 - I backup etcd daily to my object storage. See
-  [this guide](./docs/etcd-daily-backup.md) on how to setup etcd daily backup
+  [this guide](./docs/etcd-daily-backup.md) on how to setup etcd daily backup.
 - I use [Helm](https://helm.sh/) to manage my Kubernetes applications.
 - I use [Flannel](https://github.com/flannel-io/flannel) as my CNI plugin. See
   [this guide](./services/flannel/README.md) on how to setup Flannel.
