@@ -53,3 +53,6 @@ This is the source code of my infrastructure.
   to collect logs and metrics from my cluster. See
   [this guide](./services/grafana-monitoring/README.md) on how to setup Grafana
   Kubernetes Monitoring.
+- I use [Grafana](https://grafana.com/) to visualize my cluster's logs and
+  metrics. See [this guide](./services/grafana/README.md) on how to setup
+  Grafana.
