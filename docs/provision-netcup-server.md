@@ -1,25 +1,25 @@
 # Provision Netcup Server
 
-Step by step to provision
+Step-by-step guide to provision a
 [Netcup Root Server](https://www.netcup.com/en/server/root-server).
 
 ## Install Ubuntu 24.04
 
-1. Login to [Server Control Panel](https://www.servercontrolpanel.de/)
+1. Log in to the [Server Control Panel](https://www.servercontrolpanel.de/)
 2. Select **Server**
-3. Goto **Control** > Click **Shutdown**
-4. Goto **Media** > Goto **DVD Drive** > Select **Ubuntu 24.04 Live Server** >
-   Set boot mode > Click **Attach DVD**
-5. Goto **Control** > Click **Start**
-6. Goto **Screen** > Select **Install Ubuntu Server** > Configure the
+3. Go to **Control** -> Click **Shutdown**
+4. Go to **Media** -> **DVD Drive** -> Select **Ubuntu 24.04 Live Server** ->
+   Set boot mode -> Click **Attach DVD**
+5. Go to **Control** -> Click **Start**
+6. Go to **Screen** -> Select **Install Ubuntu Server** -> Configure the
    installation
 
-   - For **Network Configuration**, Select automatic for ipv4 and wait until
-     test mirror success. Do not forget to enable automatic ipv6 too.
-   - For **Ubuntu Archive Mirror Configuration**, if failed to test mirror.
-     Click `[help]` on top right of the screen, select **Enter shell**, edit
-     `/etc/netplan/00-installer-config.yaml` and change `nameservers` to
-     `1.1.1.1`. Then run `netplan apply` and `exit` to continue installation.
+   - For **Network Configuration**, select automatic for IPv4 and wait for
+     mirror test to succeed. Enable automatic IPv6 as well.
+   - For **Ubuntu Archive Mirror Configuration**, if mirror test fails: Click
+     `[help]` in the top right, select **Enter shell**, edit
+     `/etc/netplan/00-installer-config.yaml` and change nameservers to
+     `1.1.1.1`. Run netplan apply and exit to continue installation.
 
      ```yaml
      network:
@@ -32,45 +32,45 @@ Step by step to provision
                - 1.1.1.1
      ```
 
-   - For **Storage Configuration**, Select **Use entire disk**, Rename
-     `ubuntu-lv` to `root` and resize it to 50GB for worker node, all available
-     space for controller node.
-   - For **SSH Configuration**, import SSH key from GitHub and disable login
-     with password
+   - For **Storage Configuration**, select Use entire disk, rename `ubuntu-lv`
+     to `root`. For worker nodes, resize to 50GB; for controller nodes, use all
+     available space.
+   - For **SSH Configuration**, import SSH key from GitHub and disable password
+     login
 
-7. Once installation finished, Goto **Media** > Click **Detach DVD**
-8. Goto **Control** > Click **Powercycle**
+7. After installation completes, go to **Media** -> Click **Detach DVD**
+8. Go to **Control** -> Click **Powercycle**
 
 ## Setup root user
 
-1. SSH to server with user that you created during installation
+1. SSH into the server with your installation user.
 
    ```shell
    ssh hoka@<server-ip>
    ```
 
-2. Copy SSH authorized keys to root directory
+2. Copy SSH authorized keys to root directory.
 
    ```shell
    sudo cp ~/.ssh/authorized_keys /root/.ssh/authorized_keys
    ```
 
-3. Logout and ssh to server with root user
+3. Log out and SSH back to server as root user.
 
 ## Update SSH Configuration (Optional)
 
-1. Run the following command to edit your config:
+1. Edit your SSH config:
 
    ```shell
    code ~/.ssh/config
    ```
 
-2. Add the following configuration:
+2. Add the configuration:
 
    ```
    Host controller
       HostName <ip-address>
-      User hoka
+      User root
    ```
 
 ## Next step
