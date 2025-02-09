@@ -7,6 +7,18 @@
     {
       "title": "Kubernetes",
       "startUrl": "https://kubernetes.io/docs/home/"
+    },
+    {
+      "title": "Kubernetes Instrumentation",
+      "startUrl": "https://kubernetes.io/docs/reference/instrumentation/"
+    },
+    {
+      "title": "How to Monitor Kubelet",
+      "startUrl": "https://sysdig.com/blog/how-to-monitor-kubelet/"
+    },
+    {
+      "title": "Google SRE Book",
+      "startUrl": "https://sre.google/sre-book/table-of-contents/"
     }
   ]
 }
