@@ -42,3 +42,14 @@ This is the source code of my infrastructure.
 - I use [Cert Manager](https://cert-manager.io/) to manage my TLS certificates.
   See [this guide](./services/cert-manager/README.md) on how to setup Cert
   Manager.
+- I use [Grafana Loki](https://grafana.com/oss/loki/) to store my cluster's
+  logs. See [this guide](./services/grafana-loki/README.md) on how to setup
+  Grafana Loki.
+- I use [Grafana Mimir](https://grafana.com/oss/mimir/) to store my cluster's
+  metrics. See [this guide](./services/grafana-mimir/README.md) on how to setup
+  Grafana Mimir.
+- I use
+  [Grafana Kubernetes Monitoring](https://github.com/grafana/k8s-monitoring-helm)
+  to collect logs and metrics from my cluster. See
+  [this guide](./services/grafana-monitoring/README.md) on how to setup Grafana
+  Kubernetes Monitoring.
