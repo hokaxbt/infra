@@ -4,7 +4,7 @@ metadata:
   name: grafana-datasources-loki
   namespace: monitoring
   labels:
-    grafana_datasource: ""
+    grafana_datasource: "1"
 stringData:
   data.yaml: |-
     apiVersion: 1

@@ -4,7 +4,7 @@ metadata:
   name: grafana-datasources-mimir
   namespace: monitoring
   labels:
-    grafana_datasource: ""
+    grafana_datasource: "1"
 stringData:
   data.yaml: |-
     apiVersion: 1
@@ -15,3 +15,7 @@ stringData:
         url: http://grafana-mimir.monitoring.svc.cluster.local/prometheus
         isDefault: true
         editable: false
+        jsonData:
+          timeInterval: "15s"
+          prometheusType: Mimir
+          cacheLevel: High
