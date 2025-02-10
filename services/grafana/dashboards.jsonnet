@@ -12,6 +12,7 @@ local kubedashboard = kubernetes {
     grafanaK8s+:: {
       dashboardNamePrefix: 'Kubernetes / ',
       dashboardTags: ['kubernetes', 'infrastucture'],
+      grafanaTimezone: 'browser',
     },
   },
 };
