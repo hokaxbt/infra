@@ -1,5 +1,8 @@
 replicas: 1
 
+deploymentStrategy:
+  type: Recreate
+
 image:
   tag: "11.5.1"
 
@@ -12,11 +15,11 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
   hosts:
-    - grafana.hokaxbt.com
+    - dashboard.hokaxbt.com
   tls:
     - secretName: grafana-tls
       hosts:
-        - grafana.hokaxbt.com
+        - dashboard.hokaxbt.com
 
 persistence:
   enabled: true
@@ -24,4 +27,6 @@ persistence:
 
 sidecar:
   datasources:
+    enabled: true
+  dashboards:
     enabled: true

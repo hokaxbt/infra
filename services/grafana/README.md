@@ -31,6 +31,27 @@ Run the following command to install datasources:
 kubectl apply -f ./datasources
 ```
 
+## Dashboards
+
+Install the following dependencies:
+
+```shell
+brew install jsonnet
+brew install jsonnet-bundler
+```
+
+Run the following command to generate the dashboard:
+
+```shell
+jsonnet -J vendor -S -m dashboards dashboards.jsonnet
+```
+
+Run the following command to install or update dashboards:
+
+```shell
+kubectl apply -f ./dashboards
+```
+
 ## Default values
 
 Run the following command to get default values:
