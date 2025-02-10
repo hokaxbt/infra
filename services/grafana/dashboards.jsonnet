@@ -10,7 +10,7 @@ local kubedashboard = kubernetes {
     nodeExporterSelector: 'job="kubernetes-node-exporter"',
     kubeletSelector: 'job="integrations/kubernetes/kubelet"',
     grafanaK8s+:: {
-      dashboardNamePrefix: 'Mixin / ',
+      dashboardNamePrefix: 'Kubernetes / ',
       dashboardTags: ['kubernetes', 'infrastucture'],
     },
   },
