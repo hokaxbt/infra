@@ -26,3 +26,9 @@ Run the following command to upgrade Grafana Kubernetes Monitoring:
 ```shell
 helm upgrade grafana-monitoring grafana/k8s-monitoring -n monitoring --values values.yaml
 ```
+
+Run the following command to uninstall Grafana Kubernetes Monitoring:
+
+```shell
+helm uninstall grafana-monitoring -n monitoring
+```

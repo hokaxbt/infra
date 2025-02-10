@@ -26,11 +26,23 @@ alloy-metrics:
 
 alloy-logs:
   enabled: true
-  controller:
-    tolerations:
-      - key: "node-role.kubernetes.io/master"
-        operator: "Exists"
-        effect: "NoSchedule"
-      - key: "node-role.kubernetes.io/control-plane"
-        operator: "Exists"
-        effect: "NoSchedule"
+  # controller:
+  #   tolerations:
+  #     - key: "node-role.kubernetes.io/master"
+  #       operator: "Exists"
+  #       effect: "NoSchedule"
+  #     - key: "node-role.kubernetes.io/control-plane"
+  #       operator: "Exists"
+  #       effect: "NoSchedule"
+
+integrations:
+  etcd:
+    instances:
+      - name: etcd-controller
+        namespace: kube-system
+        labelSelectors:
+          app.kubernetes.io/name: etcd-controller
+        logs:
+          enabled: true
+        metrics:
+          enabled: true
