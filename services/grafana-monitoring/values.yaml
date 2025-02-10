@@ -2,7 +2,7 @@ cluster:
   name: "hoka"
 
 global:
-  scrapeInterval: 60s
+  scrapeInterval: 15s
 
 destinations:
   - name: Grafana Mimir
