@@ -3,3 +3,6 @@ inventory-*.yaml
 cluster.conf
 .DS_Store
 default-values.yaml
+
+# Libsonnet vendor
+services/grafana/vendor
