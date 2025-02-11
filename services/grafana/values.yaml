@@ -15,11 +15,11 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
   hosts:
-    - dashboard.hokaxbt.com
+    - grafana.hokaxbt.com
   tls:
     - secretName: grafana-tls
       hosts:
-        - dashboard.hokaxbt.com
+        - grafana.hokaxbt.com
 
 persistence:
   enabled: true
