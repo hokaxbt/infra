@@ -20,6 +20,8 @@ podLogs:
 
 clusterMetrics:
   enabled: true
+  apiServer:
+    enabled: true
 
 alloy-metrics:
   enabled: true
