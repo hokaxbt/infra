@@ -1,34 +1,38 @@
-# k8s monitoring by Grafana
+# Kubernetes Monitoring with Grafana
 
-## Requirements
+This setup uses Grafana to monitor a Kubernetes cluster.
 
-- [Grafana Loki](../grafana-loki/README.md) for logs
-- [Grafana Mimir](../grafana-mimir/README.md) for metrics
-- [Grafana Tempo](../grafana-tempo/README.md) for traces
+## Prerequisites
 
-## Installation
+The following services are required for this Grafana monitoring solution:
 
-Add & update repo:
+- [Grafana Loki](../grafana-loki/README.md) for log aggregation
+- [Grafana Mimir](../grafana-mimir/README.md) for metrics storage
+- [Grafana Tempo](../grafana-tempo/README.md) for distributed tracing
 
-```shell
-helm repo add grafana https://grafana.github.io/helm-charts
-helm repo update
-```
+## Deployment
 
-Run the following command to deploy Grafana Kubernetes Monitoring:
+1. **Add and update the Grafana Helm repository:**
 
-```shell
-helm install grafana-monitoring grafana/k8s-monitoring --create-namespace -n monitoring --values values.yaml
-```
+   ```bash
+   helm repo add grafana https://grafana.github.io/helm-charts
+   helm repo update
+   ```
 
-Run the following command to upgrade Grafana Kubernetes Monitoring:
+2. **Install Grafana Kubernetes Monitoring:**
 
-```shell
-helm upgrade grafana-monitoring grafana/k8s-monitoring -n monitoring --values values.yaml
-```
+   ```bash
+   helm install grafana-monitoring grafana/k8s-monitoring --create-namespace -n monitoring --values values.yaml
+   ```
 
-Run the following command to uninstall Grafana Kubernetes Monitoring:
+3. **Upgrade Grafana Kubernetes Monitoring (if already installed):**
 
-```shell
-helm uninstall grafana-monitoring -n monitoring
-```
+   ```bash
+   helm upgrade grafana-monitoring grafana/k8s-monitoring -n monitoring --values values.yaml
+   ```
+
+4. **Uninstall Grafana Kubernetes Monitoring:**
+
+   ```bash
+   helm uninstall grafana-monitoring -n monitoring
+   ```
