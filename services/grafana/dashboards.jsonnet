@@ -23,6 +23,10 @@ local data = [
     id: 'kubelet',
     dashboard: kubedashboard.grafanaDashboards['kubelet.json'],
   },
+  {
+    id: 'apiserver',
+    dashboard: kubedashboard.grafanaDashboards['apiserver.json'],
+  },
 ];
 
 local dashboards = {
