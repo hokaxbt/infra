@@ -6,7 +6,7 @@
     - name: Turn Off Swap | swapoff
       shell: |
         swapoff -a
-    - name: Turn Off Swap | /etc/fstab
+    - name: Turn Off Swap | Enable across reboot /etc/fstab
       replace:
         path: /etc/fstab
         regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
