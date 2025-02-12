@@ -4,20 +4,20 @@
 # https://github.com/masonr/yet-another-bench-script #
 # ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## #
 
-Fri Feb  7 16:47:44 UTC 2025
+Wed Feb 12 08:04:47 AM UTC 2025
 
 Basic System Information:
 ---------------------------------
-Uptime     : 0 days, 0 hours, 26 minutes
+Uptime     : 0 days, 0 hours, 1 minutes
 Processor  : AMD EPYC 9634 84-Core Processor
 CPU cores  : 4 @ 2246.624 MHz
 AES-NI     : ✔ Enabled
 VM-x/AMD-V : ❌ Disabled
 RAM        : 7.7 GiB
-Swap       : 0.0 KiB
-Disk       : 250.8 GiB
-Distro     : Ubuntu 24.04.1 LTS
-Kernel     : 6.8.0-52-generic
+Swap       : 4.0 GiB
+Disk       : 53.8 GiB
+Distro     : Ubuntu 24.04 LTS
+Kernel     : 6.8.0-53-generic
 VM Type    : KVM
 IPv4/IPv6  : ✔ Online / ❌ Offline
 
@@ -33,26 +33,26 @@ fio Disk Speed Tests (Mixed R/W 50/50) (Partition /dev/mapper/ubuntu--vg-root):
 ---------------------------------
 Block Size | 4k            (IOPS) | 64k           (IOPS)
   ------   | ---            ----  | ----           ---- 
-Read       | 223.90 MB/s  (55.9k) | 477.65 MB/s   (7.4k)
-Write      | 224.49 MB/s  (56.1k) | 480.16 MB/s   (7.5k)
-Total      | 448.39 MB/s (112.0k) | 957.82 MB/s  (14.9k)
+Read       | 200.59 MB/s  (50.1k) | 435.48 MB/s   (6.8k)
+Write      | 201.12 MB/s  (50.2k) | 437.77 MB/s   (6.8k)
+Total      | 401.71 MB/s (100.4k) | 873.26 MB/s  (13.6k)
            |                      |                     
 Block Size | 512k          (IOPS) | 1m            (IOPS)
   ------   | ---            ----  | ----           ---- 
-Read       | 532.13 MB/s   (1.0k) | 680.37 MB/s    (664)
-Write      | 560.41 MB/s   (1.0k) | 725.69 MB/s    (708)
-Total      | 1.09 GB/s     (2.1k) | 1.40 GB/s     (1.3k)
+Read       | 548.42 MB/s   (1.0k) | 634.24 MB/s    (619)
+Write      | 577.56 MB/s   (1.1k) | 676.48 MB/s    (660)
+Total      | 1.12 GB/s     (2.1k) | 1.31 GB/s     (1.2k)
 
 iperf3 Network Speed Tests (IPv4):
 ---------------------------------
 Provider        | Location (Link)           | Send Speed      | Recv Speed      | Ping           
 -----           | -----                     | ----            | ----            | ----           
-Clouvider       | London, UK (10G)          | 1.47 Gbits/sec  | 1.13 Gbits/sec  | --             
-Eranium         | Amsterdam, NL (100G)      | 1.56 Gbits/sec  | 1.87 Gbits/sec  | --             
-Uztelecom       | Tashkent, UZ (10G)        | 684 Mbits/sec   | 858 Mbits/sec   | --             
-Leaseweb        | Singapore, SG (10G)       | 534 Mbits/sec   | 952 Mbits/sec   | --             
-Clouvider       | Los Angeles, CA, US (10G) | 1.45 Gbits/sec  | 1.92 Gbits/sec  | --             
-Leaseweb        | NYC, NY, US (10G)         | 2.64 Gbits/sec  | 2.38 Gbits/sec  | --             
-Edgoo           | Sao Paulo, BR (1G)        | 651 Mbits/sec   | 1.40 Gbits/sec  | --             
+Clouvider       | London, UK (10G)          | 1.52 Gbits/sec  | 1.31 Gbits/sec  | 77.7 ms        
+Eranium         | Amsterdam, NL (100G)      | 1.34 Gbits/sec  | 1.81 Gbits/sec  | 90.8 ms        
+Uztelecom       | Tashkent, UZ (10G)        | 976 Mbits/sec   | 470 Mbits/sec   | 175 ms         
+Leaseweb        | Singapore, SG (10G)       | 590 Mbits/sec   | 849 Mbits/sec   | 343 ms         
+Clouvider       | Los Angeles, CA, US (10G) | 1.84 Gbits/sec  | 1.79 Gbits/sec  | 55.3 ms        
+Leaseweb        | NYC, NY, US (10G)         | 2.73 Gbits/sec  | 2.37 Gbits/sec  | 6.38 ms        
+Edgoo           | Sao Paulo, BR (1G)        | 1.10 Gbits/sec  | 1.03 Gbits/sec  | 133 ms         
 
-YABS completed in 3 min 26 sec
+YABS completed in 3 min 37 sec
