@@ -51,6 +51,7 @@ Step-by-step guide to provision a [Netcup Server](https://www.netcup.com/en/).
 2. Copy SSH authorized keys to root directory.
 
    ```shell
+   sudo cp ~/.bashrc /root/.bashrc
    sudo cp ~/.ssh/authorized_keys /root/.ssh/authorized_keys
    ```
 
