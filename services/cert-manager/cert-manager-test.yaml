@@ -25,10 +25,9 @@ spec:
     spec:
       containers:
         - name: cert-manager-test
-          image: hashicorp/http-echo:1.0.0
+          image: traefik/whoami
           args:
-            - -listen=:8080
-            - -text="hoka"
+            - --port=8080
           resources:
             limits:
               memory: 100Mi
@@ -81,10 +80,10 @@ spec:
   tls:
     - secretName: cert-manager-test-tls
       hosts:
-        - cert-manager-test.hokaxbt.com
+        - test-ingress.hokaxbt.com
 
   rules:
-    - host: cert-manager-test.hokaxbt.com
+    - host: test-ingress.hokaxbt.com
       http:
         paths:
           - pathType: Prefix
