@@ -32,6 +32,10 @@ Make sure pods running:
 kubectl get pods -n flannel-system -o wide
 ```
 
+Make sure no pending certificates. Check using the following command:
+`kubectl get csr` then approve any pending certificate with
+`kubectl certificate approve <csr>`.
+
 Test internal DNS query:
 
 ```shell
