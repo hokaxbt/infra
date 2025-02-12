@@ -22,6 +22,12 @@ helm install openebs openebs/openebs \
     --values values.yaml
 ```
 
+Make sure to label node:
+
+```shell
+kubectl label node <name> disktype="nvme"
+```
+
 Create storage class:
 
 ```shell
