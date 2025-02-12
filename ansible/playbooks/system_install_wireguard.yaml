@@ -1,20 +1,21 @@
 ---
-- name: APT
+- name: System | Install Wireguard
   hosts: all
   remote_user: root
   tasks:
-    - name: APT | Update apt-cache and do dist upgrade
+    - name: System | Install package
       apt:
-        update_cache: yes
-        cache_valid_time: 3600
-        upgrade: dist
+        pkg:
+          - wireguard
+        state: latest
+        update_cache: true
 
-    - name: APT | Check if reboot required
+    - name: System | Check if reboot required
       stat:
         path: /var/run/reboot-required
       register: reboot_required_file
 
-    - name: APT | Reboot if required
+    - name: System | Reboot if required
       reboot:
         reboot_timeout: 3600
       when: reboot_required_file.stat.exists == true

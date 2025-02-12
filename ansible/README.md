@@ -1,48 +1,52 @@
 # Ansible Playbook
 
-### Inventory File
+Step-by-step
 
-Create a new `inventory.yaml` file with the following contents:
+## Create inventory
 
 ```yaml
-controllers:
+control_plane_lbs:
   hosts:
-    <hostname>:
+    control-plane-lb:
       ansible_host: <ip>
-      topology:
-        region: nbg1
-        zone: nbg1-dc3
+      ansible_python_interpreter: /usr/bin/python3.12
+
+control_planes:
+  hosts:
+    control-plane-1:
+      ansible_host: <ip>
+      ansible_python_interpreter: /usr/bin/python3.12
+    control-plane-2:
+      ansible_host: <ip>
+      ansible_python_interpreter: /usr/bin/python3.12
+    control-plane-3:
+      ansible_host: <ip>
+      ansible_python_interpreter: /usr/bin/python3.12
 
 workers:
   hosts:
-    <hostname>:
+    worker-1:
       ansible_host: <ip>
-      topology:
-        region: fsn1
-        zone: fsn1-dc4
+      ansible_python_interpreter: /usr/bin/python3.12
+    worker-2:
+      ansible_host: <ip>
+      ansible_python_interpreter: /usr/bin/python3.12
 ```
 
-### Running Playbooks
+## Setup Control Plane Load Balancer
 
-To run the playbooks, use the following commands:
+Run the following command to setup the control plane load balancer:
 
-```sh
-ansible-playbook -i inventory.yaml playbooks/<name>.yaml
-ansible-playbook -i inventory-etcd-backup.yaml playbooks/etcd_daily_backup.yaml
+```shell
+ansible-playbook -i inventory-netcup.yaml playbooks/control_plane_setup_lb.yaml -l control-plane-lb
 ```
 
-## Playbooks
+Add Control Plane Load Balancer IP to DNS e.g. `sub.domain.tld`.
 
-| Playbook Name                 | Description                                                                                                                                 |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `bootstrap_nodes.yaml`        | Installs all required dependencies for Kubernetes nodes.                                                                                    |
-| `enable_kubelet_tls.yaml`     | Configures the existing cluster to allow metrics-server by enabling signed kubelet serving certificates.                                    |
-| `restart_kubelet.yaml`        | Restarts the kubelet service on all nodes.                                                                                                  |
-| `reconfigure_kubelet.yaml`    | Reconfigures the kubelet service on all nodes.                                                                                              |
-| `update_nodes.yaml`           | Updates the nodes by performing a distribution upgrade and rebooting if necessary.                                                          |
-| `check_distribution.yaml`     | Checks the OS distribution and version to ensure they match the expected values.                                                            |
-| `update_upgrade_dist.yaml`    | Updates the package cache and performs a distribution upgrade. It also checks if a reboot is required and performs the reboot if necessary. |
-| `install_cloudflare_dns.yaml` | Configures Cloudflare DNS settings using systemd-networkd and systemd-resolved.                                                             |
-| `secure_ssh.yaml`             | Secures SSH by adding authorized keys, disabling empty password login, disabling password login, and enabling PAM.                          |
-| `install_kubernetes.yaml`     | Installs kubeadm, CRI-O, kubelet, and kubectl.                                                                                              |
-| `install_wireguard.yaml`      | Installs Wireguard and checks if a reboot is required.                                                                                      |
+## Setup Nodes
+
+Run the following command to setup the nodes:
+
+```shell
+ansible-playbook -i inventory-netcup.yaml playbooks/nodes_setup.yaml -l control_planes,workers
+```

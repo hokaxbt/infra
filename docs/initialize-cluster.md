@@ -17,10 +17,10 @@ networking:
   serviceSubnet: 10.96.0.0/12
   podSubnet: 192.168.0.0/16
   dnsDomain: cluster.local
-controlPlaneEndpoint: <controller-ip>:6443
+controlPlaneEndpoint: <load-balancer-dns>:6443
 apiServer:
   certSANs:
-    - <controller-ip>
+    - <load-balancer-dns>
 clusterName: "hokaxbt"
 ---
 apiVersion: kubeproxy.config.k8s.io/v1alpha1
@@ -42,7 +42,7 @@ Update config with the `controller` IP address.
 Then initialize the cluster:
 
 ```shell
-kubeadm init --config ./kubeadm.yaml
+kubeadm init --config ./kubeadm.yaml --upload-certs
 ```
 
 SSH to worker nodes then execute the join command.
@@ -52,7 +52,7 @@ SSH to worker nodes then execute the join command.
 Download the config from `node-1` using the following command:
 
 ```shell
-scp controller:/etc/kubernetes/admin.conf $HOME/.kube/config
+scp control-plane-1:/etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 

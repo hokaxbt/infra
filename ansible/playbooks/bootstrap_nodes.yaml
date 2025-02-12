@@ -1,9 +1,0 @@
----
-- import_playbook: ./check_distribution.yaml
-- import_playbook: ./update_upgrade_dist.yaml
-- import_playbook: ./install_cloudflare_dns.yaml
-- import_playbook: ./secure_ssh.yaml
-- import_playbook: ./install_wireguard.yaml
-- import_playbook: ./etcd_install_client.yaml
-- import_playbook: ./install_kubernetes.yaml
-- import_playbook: ./turn_off_swap.yaml

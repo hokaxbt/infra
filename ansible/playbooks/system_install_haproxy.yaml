@@ -1,0 +1,30 @@
+---
+- name: System | Install haproxy
+  hosts: control-plane-lb
+  remote_user: root
+  vars:
+    control_planes: "{{ groups['control_planes'] }}"
+  tasks:
+    - name: System | Install packages
+      apt:
+        pkg:
+          - haproxy
+        state: latest
+        update_cache: true
+
+    - name: System | Write configuration
+      template:
+        src: ./files/haproxy.cfg
+        dest: /etc/haproxy/haproxy.cfg
+      notify: System | Restart
+
+    - name: System | Enable haproxy
+      service:
+        name: haproxy
+        enabled: true
+
+  handlers:
+    - name: System | Restart
+      service:
+        name: haproxy
+        state: restarted

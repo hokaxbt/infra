@@ -1,46 +1,46 @@
 ---
-- name: Cloudflare DNS
+- name: System | Set DNS
   hosts: all
   remote_user: root
-  gather_facts: true
+  gather_facts: false
   tasks:
-    - name: Cloudflare DNS | Create systemd-networkd drop-in directory
+    - name: System | Create systemd-networkd drop-in directory
       file:
         state: directory
         name: /etc/systemd/network/10-netplan-{{ansible_default_ipv4.interface}}.network.d/
         mode: "0755"
 
-    - name: Cloudflare DNS | Write Local DNS settings to systemd-networkd
+    - name: System | Write Local DNS settings to systemd-networkd
       copy:
         src: ./files/systemd-networkd.conf
         dest: /etc/systemd/network/10-netplan-{{ansible_default_ipv4.interface}}.network.d/kubernetes.conf
         owner: root
         group: root
         mode: "0644"
-      notify: Cloudflare DNS | Restart systemd-networkd
+      notify: System | Restart systemd-networkd
 
-    - name: Cloudflare DNS | Create systemd-resolved drop-in directory
+    - name: System | Create systemd-resolved drop-in directory
       file:
         state: directory
         name: /etc/systemd/resolved.conf.d/
         mode: "0755"
 
-    - name: Cloudflare DNS | Write Global DNS settings to systemd-resolved
+    - name: System | Write Global DNS settings to systemd-resolved
       copy:
         src: ./files/systemd-resolved.conf
         dest: /etc/systemd/resolved.conf.d/kubernetes.conf
         owner: root
         group: root
         mode: "0644"
-      notify: Cloudflare DNS | Restart systemd-resolved
+      notify: System | Restart systemd-resolved
 
   handlers:
-    - name: Cloudflare DNS | Restart systemd-networkd
+    - name: System | Restart systemd-networkd
       service:
         name: systemd-networkd
         state: restarted
 
-    - name: Cloudflare DNS | Restart systemd-resolved
+    - name: System | Restart systemd-resolved
       service:
         name: systemd-resolved
         state: restarted

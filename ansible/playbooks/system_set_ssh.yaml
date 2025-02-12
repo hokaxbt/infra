@@ -1,37 +1,38 @@
 ---
-- name: Secure SSH
+- name: System | Setup SSH
   hosts: all
   remote_user: root
+  gather_facts: false
   tasks:
-    - name: SSH | Add authorized keys on host
+    - name: System | Add authorized keys on host
       authorized_key:
         user: root
         state: present
         key: https://github.com/hokaxbt.keys
 
-    - name: SSH | Disable empty password login
+    - name: System | Disable empty password login
       lineinfile:
         dest: "/etc/ssh/sshd_config"
         regexp: "^#?PermitEmptyPasswords"
         line: "PermitEmptyPasswords no"
-      notify: SSH | Restart sshd
+      notify: System | Restart sshd
 
-    - name: SSH | Disable password login
+    - name: System | Disable password login
       lineinfile:
         dest: "/etc/ssh/sshd_config"
         regexp: '^(#\s*)?PasswordAuthentication '
         line: "PasswordAuthentication no"
-      notify: SSH | Restart sshd
+      notify: System | Restart sshd
 
-    - name: SSH | Enable PAM
+    - name: System | Enable PAM
       lineinfile:
         dest: "/etc/ssh/sshd_config"
         regexp: "^#?UsePAM"
         line: "UsePAM yes"
-      notify: SSH | Restart sshd
+      notify: System | Restart sshd
 
   handlers:
-    - name: SSH | Restart sshd
+    - name: System | Restart sshd
       service:
         name: ssh
         state: restarted

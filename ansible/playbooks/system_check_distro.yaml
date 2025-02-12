@@ -1,5 +1,5 @@
 ---
-- name: Check OS Distribution
+- name: System | Check OS Distribution
   hosts: all
   remote_user: root
   gather_facts: true
@@ -7,7 +7,7 @@
     distribution: Ubuntu
     distribution_version: "24.04"
   tasks:
-    - name: Check distribution
+    - name: System | Check distribution
       assert:
         that:
           - ansible_distribution == distribution

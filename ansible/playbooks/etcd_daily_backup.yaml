@@ -36,14 +36,6 @@
         group: root
         mode: "+x"
 
-    - name: Copy etcd_restore.sh
-      copy:
-        src: ./files/etcd_restore.sh
-        dest: /root/etcd_restore.sh
-        owner: root
-        group: root
-        mode: "+x"
-
     - name: Add cron job to run etcd_backup.sh daily
       cron:
         name: "etcd daily backup"

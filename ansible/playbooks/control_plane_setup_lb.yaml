@@ -1,0 +1,8 @@
+---
+- import_playbook: ./system_set_hostname.yaml
+- import_playbook: ./system_check_distribution.yaml
+- import_playbook: ./system_disable_swap.yaml
+- import_playbook: ./system_set_ssh.yaml
+- import_playbook: ./system_set_dns.yaml
+- import_playbook: ./system_update.yaml
+- import_playbook: ./system_install_haproxy.yaml

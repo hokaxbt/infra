@@ -1,13 +1,17 @@
 #!/bin/sh
 
 # Create a directory for etcd backup if it does not exist
-mkdir -p /root/etcd-backup
+BACKUP_PATH=/root/$(hostname)-etcd-backup
+
+if [ ! -d "$BACKUP_PATH" ]; then
+  mkdir -p "$BACKUP_PATH"
+fi
 
 # Define the name of backup file
-FILE_NAME=etcd-$(date +"%F%T").db
+FILE_NAME=$(hostname)-etcd-$(date +"%F%T").db
 
 # Define the full path of backup file
-ETCD_PATH=/root/etcd-backup/$FILE_NAME
+ETCD_PATH=$BACKUP_PATH/$FILE_NAME
 
 ETCDCTL_API=3 etcdctl \
     --endpoints=https://127.0.0.1:2379 \
@@ -17,10 +21,10 @@ ETCDCTL_API=3 etcdctl \
     snapshot save $ETCD_PATH
 
 # Deleting etcd backup files older than 7 days
-[ -d /root/etcd-backup ] && find /root/etcd-backup -cmin +10080 -delete
+[ -d $BACKUP_PATH ] && find $BACKUP_PATH -cmin +10080 -delete
 
 # Compressing etcd backup files
-tar czfp /root/etcd-backup.tar.gz --absolute-names /root/etcd-backup/
+tar czfp $BACKUP_PATH.tar.gz --absolute-names $BACKUP_PATH/
 
 # Uploading etcd backup files to s3
-mc cp /root/etcd-backup.tar.gz s3/kubernetes-etcd-backup/
+mc cp $BACKUP_PATH.tar.gz s3/kubernetes-etcd-backup/
