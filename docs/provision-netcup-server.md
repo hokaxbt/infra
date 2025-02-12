@@ -1,7 +1,6 @@
 # Provision Netcup Server
 
-Step-by-step guide to provision a
-[Netcup Root Server](https://www.netcup.com/en/server/root-server).
+Step-by-step guide to provision a [Netcup Server](https://www.netcup.com/en/).
 
 ## Install Ubuntu 24.04
 
