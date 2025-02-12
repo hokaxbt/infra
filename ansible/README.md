@@ -43,6 +43,15 @@ ansible-playbook -i inventory-netcup.yaml playbooks/control_plane_setup_lb.yaml 
 
 Add Control Plane Load Balancer IP to DNS e.g. `sub.domain.tld`.
 
+## Update Control Plane Load Balancer Configuration
+
+Run the following command to update the control plane load balancer
+configuration:
+
+```shell
+ansible-playbook -i inventory-netcup.yaml playbooks/system_install_haproxy.yaml
+```
+
 ## Setup Nodes
 
 Run the following command to setup the nodes:
