@@ -41,3 +41,15 @@ This deployment will bind the following ports on the controller host:
   port `30443` to serve HTTPS traffic.
 - Single control plane node: `ingress-nginx` is deployed as Deployment that bind
   to port 80 and 443.
+
+## Cloudflare IPs
+
+```shell
+curl -s -L https://www.cloudflare.com/ips-v4 | tr "\n" "," > cloudflare-ipv4.txt
+```
+
+ipv6
+
+```shell
+curl -s -L https://www.cloudflare.com/ips-v6 | tr "\n" "," > cloudflare-ipv6.txt
+```
