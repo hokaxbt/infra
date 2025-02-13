@@ -1,48 +1,48 @@
 ---
-- name: System | kubeadm init
+- name: Cluster | kubeadm init
   hosts: control_planes
   remote_user: root
   gather_facts: true
   any_errors_fatal: true
   tasks:
-    - name: System | Generate control plane certificate key
+    - name: Cluster | Generate control plane certificate key
       shell: kubeadm certs certificate-key
       register: kubernetes_join_certificate_key
       delegate_to: "{{primary_control_plane}}"
       run_once: true
 
-    - name: System | Register join token
+    - name: Cluster | Register join token
       shell: kubeadm token generate
       register: kubernetes_join_token
       delegate_to: "{{primary_control_plane}}"
       run_once: true
 
-    - name: System | Write configuration kubeadm.yaml
+    - name: Cluster | Write configuration kubeadm.yaml
       template:
         src: ./files/kubeadm-init.yaml
         dest: /root/kubeadm.yaml
       when: ansible_hostname == primary_control_plane
 
-    - name: System | Run kubeadm init
+    - name: Cluster | Run kubeadm init
       command: kubeadm init --config /root/kubeadm.yaml --upload-certs
       args:
         creates: /etc/kubernetes/admin.conf
       when: ansible_hostname == primary_control_plane
 
-    - name: System | Register PKI Cert
+    - name: Cluster | Register PKI Cert
       community.crypto.x509_certificate_info:
         path: /etc/kubernetes/pki/ca.crt
       register: kubernetes_pki_ca
       delegate_to: "{{primary_control_plane}}"
       run_once: true
 
-    - name: System | Write control plane join configuration
+    - name: Cluster | Write control plane join configuration
       template:
         src: ./files/kubeadm-join-control-plane.yaml
         dest: /root/join-control-plane.yaml
       when: ansible_hostname != primary_control_plane
 
-    - name: System | Run kubeadm join
+    - name: Cluster | Run kubeadm join
       command: kubeadm join --config /root/join-control-plane.yaml
       args:
         creates: /etc/kubernetes/admin.conf

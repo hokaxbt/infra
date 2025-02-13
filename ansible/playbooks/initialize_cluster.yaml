@@ -34,4 +34,6 @@
     control_planes: "{{ groups['control_planes'] }}"
 
 - import_playbook: ./cluster_join_workers.yaml
+# TODO: configure kubectl config on primary_control_plane
+# TODO: approve certificate
 # TODO: Add a playbook to install the flannel

@@ -4,13 +4,34 @@
   remote_user: root
   gather_facts: true
   tasks:
-    - name: System | Get join command
+    - name: Cluster | Setup kubectl on control planes
+      copy:
+        src: /etc/kubernetes/admin.conf
+        remote_src: true
+        dest: /root/.kube/config
+        owner: root
+        group: root
+        mode: 0644
+      delegate_to: "{{ primary_control_plane }}"
+      run_once: true
+
+    - name: Cluster | Get join command as worker
       command: kubeadm token create --print-join-command
       register: join_command
       delegate_to: "{{ primary_control_plane }}"
       run_once: true
 
-    - name: System | Run kubeadm join
+    - name: Cluster | Run kubeadm join as worker
       command: "{{join_command.stdout}}"
       args:
         creates: /etc/kubernetes/kubelet.conf
+
+    - name: Cluster | Check worker role label
+      command: kubectl get node {{ inventory_hostname }} -o jsonpath='{.metadata.labels.node-role\.kubernetes\.io/worker}'
+      register: worker_role
+      delegate_to: "{{ primary_control_plane }}"
+
+    - name: Cluster | Add worker role
+      command: kubectl label node {{ inventory_hostname }} node-role.kubernetes.io/worker=worker
+      delegate_to: "{{ primary_control_plane }}"
+      when: worker_role.stdout == ""
