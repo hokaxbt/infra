@@ -1,0 +1,16 @@
+---
+- name: Cluster | Join workers
+  hosts: workers
+  remote_user: root
+  gather_facts: true
+  tasks:
+    - name: System | Get join command
+      command: kubeadm token create --print-join-command
+      register: join_command
+      delegate_to: "{{ primary_control_plane }}"
+      run_once: true
+
+    - name: System | Run kubeadm join
+      command: "{{join_command.stdout}}"
+      args:
+        creates: /etc/kubernetes/kubelet.conf

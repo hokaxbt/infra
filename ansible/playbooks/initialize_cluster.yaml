@@ -19,3 +19,19 @@
 
 # Install HAProxy on load balancers
 - import_playbook: ./system_install_haproxy.yaml
+  vars:
+    control_planes:
+      - "{{ primary_control_plane }}"
+
+# Install k8s
+- import_playbook: ./system_install_kubernetes.yaml
+
+# Initialize cluster
+- import_playbook: ./cluster_join_control_planes.yaml
+
+- import_playbook: ./system_install_haproxy.yaml
+  vars:
+    control_planes: "{{ groups['control_planes'] }}"
+
+- import_playbook: ./cluster_join_workers.yaml
+# TODO: Add a playbook to install the flannel

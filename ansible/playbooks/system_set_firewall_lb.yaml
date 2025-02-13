@@ -25,6 +25,12 @@
         port: "443"
         proto: tcp
 
+    - name: System | Allow apiserver
+      ufw:
+        rule: allow
+        port: "{{load_balancer_port}}"
+        proto: tcp
+
     - name: System | Reject everything and enable UFW
       ufw:
         state: enabled

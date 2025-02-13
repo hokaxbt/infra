@@ -2,8 +2,6 @@
 - name: System | Install haproxy
   hosts: load_balancers
   remote_user: root
-  vars:
-    control_planes: "{{ groups['control_planes'] }}"
   tasks:
     - name: System | Install haproxy
       apt:
