@@ -35,8 +35,8 @@
       community.crypto.x509_certificate_info:
         path: /etc/kubernetes/pki/ca.crt
       register: kubernetes_pki_ca
-      args:
-        creates: /etc/kubernetes/admin.conf
+      delegate_to: "{{ primary_control_plane }}"
+      when: ansible_hostname != primary_control_plane
       run_once: true
 
     - name: Cluster | Write control plane join configuration
