@@ -6,6 +6,9 @@ localAPIEndpoint:
 certificateKey: "{{kubernetes_join_certificate_key.stdout}}"
 bootstrapTokens:
   - token: "{{kubernetes_join_token.stdout}}"
+nodeRegistration:
+  kubeletExtraArgs:
+    node-ip: "{{wireguard_ip}}"
 ---
 apiVersion: kubeadm.k8s.io/v1beta4
 kind: ClusterConfiguration
