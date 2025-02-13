@@ -1,6 +1,6 @@
 ---
 - name: System | Install haproxy
-  hosts: control_planes
+  hosts: load_balancers
   remote_user: root
   vars:
     control_planes: "{{ groups['control_planes'] }}"
