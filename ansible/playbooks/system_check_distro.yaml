@@ -1,15 +1,12 @@
 ---
-- name: System | Check OS Distribution
+- name: System | Check Distro
   hosts: all
   remote_user: root
   gather_facts: true
-  vars:
-    distribution: Ubuntu
-    distribution_version: "24.04"
   tasks:
-    - name: System | Check distribution
+    - name: System | Check distro
       assert:
         that:
-          - ansible_distribution == distribution
-          - ansible_distribution_version == distribution_version
-        msg: "Expected {{distribution}} {{distribution_version}}, Got {{ansible_distribution}} {{ansible_distribution_version}}"
+          - ansible_distribution == distro_name
+          - ansible_distribution_version == distro_version
+        msg: "Expected {{distro_name}} {{distro_version}}, Got {{ansible_distribution}} {{ansible_distribution_version}}"

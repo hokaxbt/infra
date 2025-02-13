@@ -1,0 +1,21 @@
+---
+# Basic setup
+- import_playbook: ./system_check_distro.yaml
+- import_playbook: ./system_set_hostname.yaml
+- import_playbook: ./system_set_dns.yaml
+- import_playbook: ./system_set_ssh.yaml
+- import_playbook: ./system_set_swap.yaml
+- import_playbook: ./system_set_firewall_lb.yaml
+- import_playbook: ./system_set_firewall_node.yaml
+- import_playbook: ./system_set_modprobe.yaml
+- import_playbook: ./system_set_sysctl.yaml
+- import_playbook: ./system_update.yaml
+
+# This is for the netcup servers
+- import_playbook: ./system_install_qemu_guest_agent.yaml
+
+# Install Wireguard
+- import_playbook: ./system_install_wireguard.yaml
+
+# Install HAProxy on load balancers
+- import_playbook: ./system_install_haproxy.yaml

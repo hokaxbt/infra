@@ -1,57 +1,9 @@
 ---
 - name: System | Install Kubernetes
-  hosts: all
+  hosts: control_planes,workers
   remote_user: root
   gather_facts: false
   tasks:
-    - name: System | Add the overlay module
-      modprobe:
-        name: overlay
-        state: present
-        persistent: present
-
-    - name: System | Add the br_netfilter module
-      modprobe:
-        name: br_netfilter
-        state: present
-        persistent: present
-
-    - name: System | Add the dm_snapshot module
-      modprobe:
-        name: dm_snapshot
-        state: present
-        persistent: present
-
-    - name: System | Add the dm_thin_pool module
-      modprobe:
-        name: dm_thin_pool
-        state: present
-        persistent: present
-
-    - name: System | Set net.ipv4.ip_forward
-      sysctl:
-        name: net.ipv4.ip_forward
-        value: "1"
-        sysctl_set: true
-        state: present
-        reload: true
-
-    - name: System | Set net.bridge.bridge-nf-call-iptables
-      sysctl:
-        name: net.bridge.bridge-nf-call-iptables
-        value: "1"
-        sysctl_set: true
-        state: present
-        reload: true
-
-    - name: System | Set net.bridge.bridge-nf-call-ip6tables
-      sysctl:
-        name: net.bridge.bridge-nf-call-ip6tables
-        value: "1"
-        sysctl_set: true
-        state: present
-        reload: true
-
     - name: System | Intall dependencies
       apt:
         pkg:

@@ -24,13 +24,6 @@
         line: "PasswordAuthentication no"
       notify: System | Restart sshd
 
-    - name: System | Enable PAM
-      lineinfile:
-        dest: "/etc/ssh/sshd_config"
-        regexp: "^#?UsePAM"
-        line: "UsePAM yes"
-      notify: System | Restart sshd
-
   handlers:
     - name: System | Restart sshd
       service:

@@ -5,40 +5,54 @@ Step-by-step
 ## Create inventory
 
 ```yaml
-control_plane_lbs:
+all:
+  vars:
+    distro_name: Ubuntu
+    distro_version: "24.04"
+
+    wireguard_mask_bits: 8
+    wireguard_port: 51871
+  children:
+    load_balancers:
+    control_planes:
+    workers:
+
+load_balancers:
   hosts:
-    control-plane-lb:
+    load-balancer-1:
       ansible_host: <ip>
       ansible_python_interpreter: /usr/bin/python3.12
+      wireguard_ip: 10.0.0.1
 
 control_planes:
   hosts:
     control-plane-1:
       ansible_host: <ip>
       ansible_python_interpreter: /usr/bin/python3.12
+      wireguard_ip: 10.0.0.2
     control-plane-2:
       ansible_host: <ip>
       ansible_python_interpreter: /usr/bin/python3.12
+      wireguard_ip: 10.0.0.3
     control-plane-3:
       ansible_host: <ip>
       ansible_python_interpreter: /usr/bin/python3.12
+      wireguard_ip: 10.0.0.4
 
 workers:
   hosts:
     worker-1:
       ansible_host: <ip>
       ansible_python_interpreter: /usr/bin/python3.12
-    worker-2:
-      ansible_host: <ip>
-      ansible_python_interpreter: /usr/bin/python3.12
+      wireguard_ip: 10.0.0.5
 ```
 
-## Setup Control Plane Load Balancer
+## Initialize the cluster
 
-Run the following command to setup the control plane load balancer:
+Run the following command to initialize the cluster:
 
 ```shell
-ansible-playbook -i inventory-netcup.yaml playbooks/control_plane_setup_lb.yaml -l control-plane-lb
+ansible-playbook -i inventory.yaml playbooks/initialize_cluster.yaml
 ```
 
 Add Control Plane Load Balancer IP to DNS e.g. `sub.domain.tld`.

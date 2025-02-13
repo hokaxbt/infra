@@ -1,0 +1,29 @@
+---
+- name: System | Set modprobe
+  hosts: all
+  remote_user: root
+  gather_facts: false
+  tasks:
+    - name: System | Add the overlay module
+      modprobe:
+        name: overlay
+        state: present
+        persistent: present
+
+    - name: System | Add the br_netfilter module
+      modprobe:
+        name: br_netfilter
+        state: present
+        persistent: present
+
+    - name: System | Add the dm_snapshot module
+      modprobe:
+        name: dm_snapshot
+        state: present
+        persistent: present
+
+    - name: System | Add the dm_thin_pool module
+      modprobe:
+        name: dm_thin_pool
+        state: present
+        persistent: present

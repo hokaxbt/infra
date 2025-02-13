@@ -1,16 +1,14 @@
 ---
 - name: System | Install haproxy
-  hosts: control-plane-lb
+  hosts: control_planes
   remote_user: root
   vars:
     control_planes: "{{ groups['control_planes'] }}"
   tasks:
-    - name: System | Install packages
+    - name: System | Install haproxy
       apt:
-        pkg:
-          - haproxy
-        state: latest
-        update_cache: true
+        name: haproxy
+        state: present
 
     - name: System | Write configuration
       template:

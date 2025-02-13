@@ -1,5 +1,5 @@
 NOTES*.md
-inventory-*.yaml
+inventory*.yaml
 cluster.conf
 .DS_Store
 default-values.yaml
