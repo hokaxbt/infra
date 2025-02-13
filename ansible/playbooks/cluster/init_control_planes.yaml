@@ -8,13 +8,15 @@
     - name: Cluster | Generate control plane certificate key
       shell: kubeadm certs certificate-key
       register: kubernetes_join_certificate_key
-      delegate_to: "{{primary_control_plane}}"
+      args:
+        creates: /etc/kubernetes/admin.conf
       run_once: true
 
     - name: Cluster | Register join token
       shell: kubeadm token generate
       register: kubernetes_join_token
-      delegate_to: "{{primary_control_plane}}"
+      args:
+        creates: /etc/kubernetes/admin.conf
       run_once: true
 
     - name: Cluster | Write configuration kubeadm.yaml
@@ -33,7 +35,8 @@
       community.crypto.x509_certificate_info:
         path: /etc/kubernetes/pki/ca.crt
       register: kubernetes_pki_ca
-      delegate_to: "{{primary_control_plane}}"
+      args:
+        creates: /etc/kubernetes/admin.conf
       run_once: true
 
     - name: Cluster | Write control plane join configuration
@@ -47,3 +50,12 @@
       args:
         creates: /etc/kubernetes/admin.conf
       when: ansible_hostname != primary_control_plane
+
+    - name: Cluster | Setup kubectl
+      copy:
+        src: /etc/kubernetes/admin.conf
+        remote_src: true
+        dest: /root/.kube/config
+        owner: root
+        group: root
+        mode: 0644

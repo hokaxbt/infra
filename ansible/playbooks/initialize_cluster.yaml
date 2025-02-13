@@ -1,39 +1,37 @@
 ---
 # Basic setup
-- import_playbook: ./system_check_distro.yaml
-- import_playbook: ./system_set_hostname.yaml
-- import_playbook: ./system_set_dns.yaml
-- import_playbook: ./system_set_ssh.yaml
-- import_playbook: ./system_set_swap.yaml
-- import_playbook: ./system_set_firewall_lb.yaml
-- import_playbook: ./system_set_firewall_node.yaml
-- import_playbook: ./system_set_modprobe.yaml
-- import_playbook: ./system_set_sysctl.yaml
-- import_playbook: ./system_update.yaml
+- import_playbook: ./node/check_distro.yaml
+- import_playbook: ./node/set_hostname.yaml
+- import_playbook: ./node/set_dns.yaml
+- import_playbook: ./node/set_ssh.yaml
+- import_playbook: ./node/set_swap.yaml
+- import_playbook: ./node/set_firewall_lb.yaml
+- import_playbook: ./node/set_firewall_node.yaml
+- import_playbook: ./node/set_modprobe.yaml
+- import_playbook: ./node/set_sysctl.yaml
+- import_playbook: ./node/update.yaml
 
 # This is for the netcup servers
-- import_playbook: ./system_install_qemu_guest_agent.yaml
+- import_playbook: ./node/install_qemu_guest_agent.yaml
 
 # Install Wireguard
-- import_playbook: ./system_install_wireguard.yaml
+- import_playbook: ./node/install_wireguard.yaml
 
 # Install HAProxy on load balancers
-- import_playbook: ./system_install_haproxy.yaml
+- import_playbook: ./node/install_haproxy.yaml
   vars:
     control_planes:
       - "{{ primary_control_plane }}"
 
 # Install k8s
-- import_playbook: ./system_install_kubernetes.yaml
+- import_playbook: ./node/install_kubernetes.yaml
 
 # Initialize cluster
-- import_playbook: ./cluster_join_control_planes.yaml
+- import_playbook: ./cluster/init_control_planes.yaml
 
-- import_playbook: ./system_install_haproxy.yaml
+- import_playbook: ./node/install_haproxy.yaml
   vars:
     control_planes: "{{ groups['control_planes'] }}"
 
-- import_playbook: ./cluster_join_workers.yaml
-# TODO: configure kubectl config on primary_control_plane
-# TODO: approve certificate
+- import_playbook: ./cluster/init_workers.yaml
 # TODO: Add a playbook to install the flannel
