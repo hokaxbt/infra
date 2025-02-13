@@ -51,6 +51,13 @@
         creates: /etc/kubernetes/admin.conf
       when: ansible_hostname != primary_control_plane
 
+    - name: Cluster | Create .kube directory
+      file:
+        path: /root/.kube
+        state: directory
+        owner: root
+        group: root
+
     - name: Cluster | Setup kubectl
       copy:
         src: /etc/kubernetes/admin.conf
