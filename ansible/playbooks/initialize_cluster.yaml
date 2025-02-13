@@ -14,24 +14,21 @@
 # This is for the netcup servers
 - import_playbook: ./node/install_qemu_guest_agent.yaml
 
-# Install Wireguard
 - import_playbook: ./node/install_wireguard.yaml
 
-# Install HAProxy on load balancers
+# Only for the primary control plane before others joined
 - import_playbook: ./node/install_haproxy.yaml
   vars:
     control_planes:
       - "{{ primary_control_plane }}"
 
-# Install k8s
 - import_playbook: ./node/install_kubernetes.yaml
+- import_playbook: ./cluster/join_control_planes.yaml
 
-# Initialize cluster
-- import_playbook: ./cluster/init_control_planes.yaml
-
+# Load balance to all control planes
 - import_playbook: ./node/install_haproxy.yaml
   vars:
     control_planes: "{{ groups['control_planes'] }}"
 
-- import_playbook: ./cluster/init_workers.yaml
+- import_playbook: ./cluster/join_workers.yaml
 # TODO: Add a playbook to install the flannel

@@ -4,17 +4,6 @@
   remote_user: root
   gather_facts: true
   tasks:
-    - name: Cluster | Setup kubectl on control planes
-      copy:
-        src: /etc/kubernetes/admin.conf
-        remote_src: true
-        dest: /root/.kube/config
-        owner: root
-        group: root
-        mode: 0644
-      delegate_to: "{{ primary_control_plane }}"
-      run_once: true
-
     - name: Cluster | Get join command as worker
       command: kubeadm token create --print-join-command
       register: join_command
