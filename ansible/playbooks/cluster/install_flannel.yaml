@@ -1,0 +1,37 @@
+---
+- name: Cluster | Install flannel CNI
+  hosts: control_planes
+  remote_user: root
+  gather_facts: false
+  any_errors_fatal: true
+
+  tasks:
+    - name: Cluster | Create flannel-system namespace
+      kubernetes.core.k8s:
+        name: flannel-system
+        api_version: v1
+        kind: Namespace
+        state: present
+        definition:
+          metadata:
+            labels:
+              pod-security.kubernetes.io/enforce: privileged
+      run_once: true
+
+    - name: Cluster | Install flannel
+      kubernetes.core.helm:
+        name: flannel
+        chart_ref: flannel
+        chart_repo_url: https://flannel-io.github.io/flannel/
+        release_namespace: flannel-system
+        create_namespace: true
+        wait: true
+        values:
+          podCidr: "{{kubernetes_pod_cidr}}"
+          flannel:
+            backend: "vxlan"
+            args:
+              - "--ip-masq"
+              - "--kube-subnet-mgr"
+              - "--iface=wg0"
+      run_once: true

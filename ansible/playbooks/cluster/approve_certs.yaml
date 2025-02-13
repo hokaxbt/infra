@@ -1,6 +1,6 @@
 ---
 - name: Cluster | Approve all pending certificates
-  hosts: "{{primary_control_plane}}"
+  hosts: control_planes
   remote_user: root
   gather_facts: true
   any_errors_fatal: true
@@ -9,3 +9,4 @@
       shell: kubectl get csr -o name | xargs kubectl certificate approve
       register: approve_certificates
       changed_when: approve_certificates.rc != 0
+      run_once: true

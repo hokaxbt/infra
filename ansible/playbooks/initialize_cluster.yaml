@@ -31,4 +31,6 @@
     control_planes: "{{ groups['control_planes'] }}"
 
 - import_playbook: ./cluster/join_workers.yaml
+- import_playbook: ./cluster/approve_certs.yaml
+- import_playbook: ./cluster/install_helm.yaml
 # TODO: Add a playbook to install the flannel
