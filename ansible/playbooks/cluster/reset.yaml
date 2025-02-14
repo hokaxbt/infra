@@ -1,0 +1,28 @@
+---
+- name: Reset workers
+  hosts: workers
+  remote_user: root
+  gather_facts: true
+  tasks:
+    - name: Reset workers
+      command: kubeadm reset --force
+      args:
+        removes: /etc/kubernetes/kubelet.conf
+
+- name: Reset control planes
+  hosts: control_planes
+  remote_user: root
+  gather_facts: true
+  tasks:
+    - name: Reset control planes
+      command: kubeadm reset --force
+      args:
+        removes: /etc/kubernetes/kubelet.conf
+    - name: Delete kubeconfig
+      file:
+        path: /etc/kubernetes/admin.conf
+        state: absent
+    - name: Delete kubeconfig
+      file:
+        path: /root/.kube/config
+        state: absent

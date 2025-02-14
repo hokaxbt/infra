@@ -10,8 +10,3 @@ discovery:
     token: "{{kubernetes_join_token.stdout}}"
     caCertHashes:
       - 'sha256:{{ kubernetes_pki_ca["public_key_fingerprints"]["sha256"] | replace(":","") }}'
-controlPlane:
-  localAPIEndpoint:
-    advertiseAddress: "{{ wireguard_ip }}"
-    bindPort: 6443
-  certificateKey: "{{kubernetes_join_certificate_key.stdout}}"
