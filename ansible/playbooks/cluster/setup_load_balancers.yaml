@@ -1,0 +1,28 @@
+---
+- name: Cluster / Load Balancers
+  hosts: load_balancers
+  remote_user: root
+  vars:
+    control_planes: "{{ groups['control_planes'] }}"
+  tasks:
+    - name: Load Balancers | Install haproxy
+      apt:
+        name: haproxy
+        state: present
+
+    - name: Load Balancers | Write haproxy configuration
+      template:
+        src: ./files/haproxy.cfg
+        dest: /etc/haproxy/haproxy.cfg
+      notify: Load Balancers | Restart haproxy service
+
+    - name: Load Balancers | Enable haproxy service
+      service:
+        name: haproxy
+        enabled: true
+
+  handlers:
+    - name: Load Balancers | Restart haproxy service
+      service:
+        name: haproxy
+        state: restarted
