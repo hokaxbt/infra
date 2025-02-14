@@ -20,8 +20,6 @@ cluster-config:
     enabled: true
   cloud-provider: external
 disable-rbac: false
-secure-port: 6443
-k8s-dqlite-port: 9000
 datastore-type: k8s-dqlite
 extra-sans:
   - "{{load_balancer_dns}}"

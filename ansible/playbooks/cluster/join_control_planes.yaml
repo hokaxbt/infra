@@ -1,18 +1,30 @@
 ---
-- name: Cluster | Join control planes
+- name: Cluster / Join control planes
   hosts: control_planes
   remote_user: root
   gather_facts: true
   any_errors_fatal: true
   tasks:
-    - name: Cluster | Write configuration bootstrap.yaml
+    - name: Join control planes | Write configuration bootstrap.yaml
       template:
         src: ./files/bootstrap.yaml
         dest: /root/bootstrap.yaml
-      when: ansible_hostname == primary_control_plane
+      when: inventory_hostname == groups['control_planes'][0]
 
-    - name: Cluster | Run bootstrap
-      command: k8s bootstrap --file /root/bootstrap.yaml
+    - name: Join control planes | Run bootstrap
+      command: k8s bootstrap --file /root/bootstrap.yaml --address "{{wireguard_ip}}"
       args:
         creates: /etc/kubernetes/admin.conf
-      when: ansible_hostname == primary_control_plane
+      when: inventory_hostname == groups['control_planes'][0]
+
+    - name: Join control planes | Register join token
+      command: k8s get-join-token {{inventory_hostname}}
+      delegate_to: "{{groups['control_planes'][0]}}"
+      register: join_token
+      when: inventory_hostname != groups['control_planes'][0]
+
+    - name: Join control planes | Join
+      command: k8s join-cluster "{{join_token.stdout}}" --address {{wireguard_ip}}
+      args:
+        creates: /etc/kubernetes/admin.conf
+      when: inventory_hostname != groups['control_planes'][0]

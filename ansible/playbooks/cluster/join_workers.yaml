@@ -1,0 +1,16 @@
+---
+- name: Cluster / Join Workers
+  hosts: workers
+  remote_user: root
+  gather_facts: true
+  any_errors_fatal: true
+  tasks:
+    - name: Join Workers | Register join token
+      command: k8s get-join-token {{inventory_hostname}} --worker
+      delegate_to: "{{groups['control_planes'][0]}}"
+      register: join_token
+
+    - name: Join Workers | Join
+      command: k8s join-cluster "{{join_token.stdout}}" --address {{wireguard_ip}}
+      args:
+        creates: /etc/kubernetes/kubelet.conf
