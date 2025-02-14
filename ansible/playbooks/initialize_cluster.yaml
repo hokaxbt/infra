@@ -16,23 +16,24 @@
 
 - import_playbook: ./node/install_wireguard.yaml
 
-- import_playbook: ./node/install_kubernetes.yaml
+- import_playbook: ./node/install_snapd.yaml
+- import_playbook: ./node/install_k8s.yaml
+# - import_playbook: ./node/install_kubernetes.yaml
 
 # Only for the primary control plane before others joined
-- import_playbook: ./node/install_haproxy.yaml
-  vars:
-    control_planes:
-      - "{{ primary_control_plane }}"
+# - import_playbook: ./node/install_haproxy.yaml
+#   vars:
+#     control_planes:
+#       - "{{ primary_control_plane }}"
 
 - import_playbook: ./cluster/join_control_planes.yaml
-
 # Load balance to all control planes
-- import_playbook: ./node/install_haproxy.yaml
-  vars:
-    control_planes: "{{ groups['control_planes'] }}"
+# - import_playbook: ./node/install_haproxy.yaml
+#   vars:
+#     control_planes: "{{ groups['control_planes'] }}"
 
-- import_playbook: ./cluster/join_workers.yaml
-- import_playbook: ./cluster/approve_certs.yaml
-- import_playbook: ./cluster/install_helm.yaml
-- import_playbook: ./cluster/install_flannel.yaml
+# - import_playbook: ./cluster/join_workers.yaml
+# - import_playbook: ./cluster/approve_certs.yaml
+# - import_playbook: ./cluster/install_helm.yaml
+# - import_playbook: ./cluster/install_flannel.yaml
 # TODO: Add a playbook to install the flannel

@@ -5,62 +5,14 @@
   gather_facts: true
   any_errors_fatal: true
   tasks:
-    - name: Cluster | Generate control plane certificate key
-      shell: kubeadm certs certificate-key
-      register: kubernetes_join_certificate_key
-      args:
-        creates: /etc/kubernetes/admin.conf
-      run_once: true
-
-    - name: Cluster | Register join token
-      shell: kubeadm token generate
-      register: kubernetes_join_token
-      args:
-        creates: /etc/kubernetes/admin.conf
-      run_once: true
-
-    - name: Cluster | Write configuration kubeadm.yaml
+    - name: Cluster | Write configuration bootstrap.yaml
       template:
-        src: ./files/kubeadm-init.yaml
-        dest: /root/kubeadm.yaml
+        src: ./files/bootstrap.yaml
+        dest: /root/bootstrap.yaml
       when: ansible_hostname == primary_control_plane
 
-    - name: Cluster | Run kubeadm init
-      command: kubeadm init --config /root/kubeadm.yaml --upload-certs
+    - name: Cluster | Run bootstrap
+      command: k8s bootstrap --file /root/bootstrap.yaml
       args:
         creates: /etc/kubernetes/admin.conf
       when: ansible_hostname == primary_control_plane
-
-    - name: Cluster | Register PKI Cert
-      community.crypto.x509_certificate_info:
-        path: /etc/kubernetes/pki/ca.crt
-      register: kubernetes_pki_ca
-      run_once: true
-
-    - name: Cluster | Write control plane join configuration
-      template:
-        src: ./files/kubeadm-join-control-plane.yaml
-        dest: /root/join-control-plane.yaml
-      when: ansible_hostname != primary_control_plane
-
-    - name: Cluster | Run kubeadm join
-      command: kubeadm join --config /root/join-control-plane.yaml
-      args:
-        creates: /etc/kubernetes/admin.conf
-      when: ansible_hostname != primary_control_plane
-
-    - name: Cluster | Create .kube directory
-      file:
-        path: /root/.kube
-        state: directory
-        owner: root
-        group: root
-
-    - name: Cluster | Setup kubectl
-      copy:
-        src: /etc/kubernetes/admin.conf
-        remote_src: true
-        dest: /root/.kube/config
-        owner: root
-        group: root
-        mode: 0644

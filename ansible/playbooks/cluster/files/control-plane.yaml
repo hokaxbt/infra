@@ -1,0 +1,4 @@
+extra-sans:
+  - "{{load_balancer_dns}}"
+extra-node-kubelet-args:
+  --node-ip: "{{wireguard_ip}}"
