@@ -1,10 +1,10 @@
 ---
-- name: System | Install k8s
+- name: Node | Install k8s
   hosts: control_planes,workers
   remote_user: root
   gather_facts: false
   tasks:
-    - name: System | Install k8s
+    - name: Node | Install k8s
       snap:
         name: k8s
         classic: true

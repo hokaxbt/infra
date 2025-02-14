@@ -1,13 +1,13 @@
 ---
-- name: System | Turn Off Swap
+- name: Node | Turn Off Swap
   hosts: all
   remote_user: root
   gather_facts: false
   tasks:
-    - name: System | swapoff
+    - name: Node | swapoff
       shell: |
         swapoff -a
-    - name: System | Enable swapoff across reboot
+    - name: Node | Enable swapoff across reboot
       replace:
         path: /etc/fstab
         regexp: '^([^#].*?\sswap\s+sw\s+.*)$'

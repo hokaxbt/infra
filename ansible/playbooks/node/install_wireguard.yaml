@@ -1,71 +1,71 @@
 # Refs:
 # - https://ubuntu.com/server/docs/introduction-to-wireguard-vpn
 ---
-- name: System | Install Wireguard
+- name: Node | Install Wireguard
   hosts: all
   remote_user: root
   gather_facts: true
   tasks:
-    - name: System | Install wireguard
+    - name: Node | Install wireguard
       apt:
         name: wireguard
         state: present
 
-    - name: System | Create Wireguard private key
+    - name: Node | Create Wireguard private key
       shell: wg genkey | tee /etc/wireguard/wg0.key
       args:
         creates: /etc/wireguard/wg0.key
 
-    - name: System | Set Wireguard private key permissions
+    - name: Node | Set Wireguard private key permissions
       file:
         path: /etc/wireguard/wg0.key
         owner: root
         group: root
         mode: 0600
 
-    - name: System | Register private key
+    - name: Node | Register private key
       shell: cat /etc/wireguard/wg0.key
       register: wireguard_private_key
 
-    - name: System | Generate Wireguard public key
+    - name: Node | Generate Wireguard public key
       shell: cat /etc/wireguard/wg0.key | wg pubkey | tee /etc/wireguard/wg0.pub
       args:
         creates: /etc/wireguard/wg0.pub
 
-    - name: System | Register public key
+    - name: Node | Register public key
       shell: cat /etc/wireguard/wg0.pub
       register: wireguard_public_key
 
-    - name: System | Setup wg0 network
+    - name: Node | Setup wg0 network
       template:
         src: ./files/wireguard-wg0.conf
         dest: /etc/wireguard/wg0.conf
         owner: root
         group: systemd-network
         mode: 0640
-      notify: System | Restart wireguard
+      notify: Node | Restart wireguard
 
-    - name: System | Enable wg0 network
+    - name: Node | Enable wg0 network
       service:
         name: wg-quick@wg0
         state: started
         enabled: true
 
-    - name: System | Allow inter-node connection
+    - name: Node | Allow inter-node connection
       ufw:
         rule: allow
         src: "{{ hostvars[item].wireguard_ip }}"
       with_items: "{{ groups['all'] }}"
       when: item != inventory_hostname
 
-    - name: System | Allow Wireguard
+    - name: Node | Allow Wireguard
       ufw:
         rule: allow
         port: "{{wireguard_port}}"
         proto: udp
 
   handlers:
-    - name: System | Restart wireguard
+    - name: Node | Restart wireguard
       service:
         name: wg-quick@wg0
         state: restarted

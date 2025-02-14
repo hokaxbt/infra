@@ -1,10 +1,10 @@
 ---
-- name: System | Install Kubernetes
+- name: Node | Install Kubernetes
   hosts: control_planes,workers
   remote_user: root
   gather_facts: false
   tasks:
-    - name: System | Intall dependencies
+    - name: Node | Intall dependencies
       apt:
         pkg:
           - apt-transport-https
@@ -16,31 +16,31 @@
         state: latest
         update_cache: true
 
-    - name: System | Add Kubernetes GPG key
+    - name: Node | Add Kubernetes GPG key
       get_url:
         url: https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key
         dest: /etc/apt/keyrings/kubernetes-apt-keyring.asc
 
-    - name: System | Add CRI-O GPG key
+    - name: Node | Add CRI-O GPG key
       get_url:
         url: https://pkgs.k8s.io/addons:/cri-o:/stable:/v1.31/deb/Release.key
         dest: /etc/apt/keyrings/cri-o-apt-keyring.asc
 
-    - name: System | Add Kubernetes to the repo
+    - name: Node | Add Kubernetes to the repo
       apt_repository:
         repo: deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.asc] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /
         filename: kubernetes
         state: present
         update_cache: yes
 
-    - name: System | Add CRI-O to the repo
+    - name: Node | Add CRI-O to the repo
       apt_repository:
         repo: deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.asc] https://pkgs.k8s.io/addons:/cri-o:/stable:/v1.31/deb/ /
         filename: cri-o
         state: present
         update_cache: yes
 
-    - name: System | Intall kubeadm
+    - name: Node | Intall kubeadm
       apt:
         pkg:
           - kubeadm
@@ -50,7 +50,7 @@
         state: latest
         update_cache: true
 
-    - name: System | Hold
+    - name: Node | Hold
       dpkg_selections:
         name: "{{ item }}"
         selection: hold
@@ -60,13 +60,13 @@
         - kubelet
         - kubectl
 
-    - name: System | Start CRI-O
+    - name: Node | Start CRI-O
       service:
         name: cri-o
         state: started
         enabled: true
 
-    - name: System | Start Kubelet
+    - name: Node | Start Kubelet
       service:
         name: kubelet
         state: started

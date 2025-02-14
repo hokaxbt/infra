@@ -1,15 +1,15 @@
 ---
-- name: System | Install qemu-guest-agent
+- name: Node | Install qemu-guest-agent
   hosts: all
   remote_user: root
   gather_facts: false
   tasks:
-    - name: System | Install qemu-guest-agent
+    - name: Node | Install qemu-guest-agent
       apt:
         name: qemu-guest-agent
         state: present
 
-    - name: System | Start qemu-guest-agent
+    - name: Node | Start qemu-guest-agent
       service:
         name: qemu-guest-agent
         state: started

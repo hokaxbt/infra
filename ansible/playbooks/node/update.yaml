@@ -1,21 +1,21 @@
 ---
-- name: System | Update
+- name: Node | Update
   hosts: all
   remote_user: root
   gather_facts: false
   tasks:
-    - name: System | Update apt-cache and do dist upgrade
+    - name: Node | Update apt-cache and do dist upgrade
       apt:
         update_cache: yes
         cache_valid_time: 3600
         upgrade: dist
 
-    - name: System | Check if reboot required
+    - name: Node | Check if reboot required
       stat:
         path: /var/run/reboot-required
       register: reboot_required_file
 
-    - name: System | Reboot if required
+    - name: Node | Reboot if required
       reboot:
         reboot_timeout: 3600
       when: reboot_required_file.stat.exists == true

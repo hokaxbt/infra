@@ -1,22 +1,22 @@
 ---
-- name: System | Install etcdctl
+- name: Node | Install etcdctl
   hosts: control_planes
   remote_user: root
   gather_facts: false
   tasks:
-    - name: System | Install package
+    - name: Node | Install package
       apt:
         pkg:
           - etcd-client
         state: latest
         update_cache: true
 
-    - name: System | Check if reboot required
+    - name: Node | Check if reboot required
       stat:
         path: /var/run/reboot-required
       register: reboot_required_file
 
-    - name: System | Reboot if required
+    - name: Node | Reboot if required
       reboot:
         reboot_timeout: 3600
       when: reboot_required_file.stat.exists == true

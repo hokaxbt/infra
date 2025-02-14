@@ -1,26 +1,26 @@
 ---
-- name: System | Install haproxy
+- name: Node | Install haproxy
   hosts: load_balancers
   remote_user: root
   tasks:
-    - name: System | Install haproxy
+    - name: Node | Install haproxy
       apt:
         name: haproxy
         state: present
 
-    - name: System | Write configuration
+    - name: Node | Write configuration
       template:
         src: ./files/haproxy.cfg
         dest: /etc/haproxy/haproxy.cfg
-      notify: System | Restart
+      notify: Node | Restart
 
-    - name: System | Enable haproxy
+    - name: Node | Enable haproxy
       service:
         name: haproxy
         enabled: true
 
   handlers:
-    - name: System | Restart
+    - name: Node | Restart
       service:
         name: haproxy
         state: restarted

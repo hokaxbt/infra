@@ -1,10 +1,10 @@
 ---
-- name: System | Install snapd
+- name: Node | Install snapd
   hosts: control_planes,workers
   remote_user: root
   gather_facts: false
   tasks:
-    - name: System | Install snapd
+    - name: Node | Install snapd
       apt:
         name: snapd
         state: present

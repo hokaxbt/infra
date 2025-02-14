@@ -1,19 +1,19 @@
 ---
-- name: System | Set firewall for nodes
+- name: Node | Set firewall for nodes
   hosts: control_planes,workers
   remote_user: root
   tasks:
-    - name: System | Set ufw logging
+    - name: Node | Set ufw logging
       ufw:
         logging: "on"
 
-    - name: System | Allow SSH
+    - name: Node | Allow SSH
       ufw:
         rule: allow
         port: "22"
         proto: tcp
 
-    - name: System | Reject everything and enable UFW
+    - name: Node | Reject everything and enable UFW
       ufw:
         state: enabled
         policy: reject

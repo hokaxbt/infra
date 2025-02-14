@@ -1,9 +1,9 @@
 ---
-- name: System | Set hostname
+- name: Node | Set hostname
   hosts: all
   remote_user: root
   gather_facts: false
   tasks:
-    - name: System | Set hostname
+    - name: Node | Set hostname
       hostname:
         name: "{{inventory_hostname}}"

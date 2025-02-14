@@ -1,10 +1,10 @@
 ---
-- name: System | Check Distro
+- name: Node | Check Distro
   hosts: all
   remote_user: root
   gather_facts: true
   tasks:
-    - name: System | Check distro
+    - name: Node | Check distro
       assert:
         that:
           - ansible_distribution == distro_name

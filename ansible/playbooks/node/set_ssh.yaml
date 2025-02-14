@@ -1,31 +1,31 @@
 ---
-- name: System | Setup SSH
+- name: Node | Setup SSH
   hosts: all
   remote_user: root
   gather_facts: false
   tasks:
-    - name: System | Add authorized keys on host
+    - name: Node | Add authorized keys on host
       authorized_key:
         user: root
         state: present
         key: https://github.com/hokaxbt.keys
 
-    - name: System | Disable empty password login
+    - name: Node | Disable empty password login
       lineinfile:
         dest: "/etc/ssh/sshd_config"
         regexp: "^#?PermitEmptyPasswords"
         line: "PermitEmptyPasswords no"
-      notify: System | Restart sshd
+      notify: Node | Restart sshd
 
-    - name: System | Disable password login
+    - name: Node | Disable password login
       lineinfile:
         dest: "/etc/ssh/sshd_config"
         regexp: '^(#\s*)?PasswordAuthentication '
         line: "PasswordAuthentication no"
-      notify: System | Restart sshd
+      notify: Node | Restart sshd
 
   handlers:
-    - name: System | Restart sshd
+    - name: Node | Restart sshd
       service:
         name: ssh
         state: restarted
