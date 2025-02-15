@@ -1,9 +1,11 @@
 ---
-- name: Cluster / Load Balancers
+- name: Cluster / Load balancers
   hosts: load_balancers
   remote_user: root
   vars:
-    control_planes: "{{ groups['control_planes'] }}"
+    # control_planes: "{{ groups['control_planes'] }}"
+    control_planes:
+      - "{{ groups['control_planes'][0] }}"
   tasks:
     - name: Load Balancers | Install haproxy
       apt:
